@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvCategoria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tvCategoria" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="368dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tvListaProd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tvListaProd" />
+
+    <ListView
+        android:id="@+id/lstProductos"
+        android:layout_width="wrap_content"
+        android:layout_height="388dp">
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/tvCantidad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tvCantidad" />
+
+    <EditText
+        android:id="@+id/edtProdCantidad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        android:text="@string/edtProdCantidad" />
+
+    <Button
+        android:id="@+id/btnProdAddPedido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btnProdAddPedido" />
+</LinearLayout>
