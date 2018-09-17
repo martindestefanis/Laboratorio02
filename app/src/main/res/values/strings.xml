@@ -1,23 +1,21 @@
 <resources>
     <string name="app_name">Laboratorio02</string>
     <string name="main_titulo">Menu de opciones</string>
-    <string name="tvCategoria">Seleccione una Categoria</string>
-    <string name="tvListaProd">Lista de Productos</string>
-    <string name="tvCantidad">Cantidad a Pedir</string>
+    <string name="tvCategoria">Seleccione una categoria</string>
+    <string name="tvListaProd">Lista de productos</string>
+    <string name="tvCantidad">Cantidad a pedir</string>
     <string name="edtProdCantidad">0</string>
     <string name="btnProdAddPedido">Agregar</string>
-
-    <string name="lblTitulo">Datos del Pedido</string>
-    <string name="lblCorreo">Correo electronico</string>
-    <string name="tvModoEntrega">Modo de Entrega</string>
+    <string name="lblTitulo">Datos del pedido</string>
+    <string name="lblCorreo">Correo electrónico</string>
+    <string name="tvModoEntrega">Modo de entrega</string>
     <string name="optPedidoRetira">Retira en local</string>
     <string name="optPedidoEnviar">Enviar a domicilio</string>
-    <string name="pedido_lbl_direccion">Dirección de Envio</string>
-    <string name="pedido_label_hora_entrega">Hora Solicitada(hh:mm)</string>
+    <string name="pedido_lbl_direccion">Dirección de envio</string>
+    <string name="pedido_label_hora_entrega">Hora solicitada(hh:mm)</string>
     <string name="btnPedidoAddProducto">AGREGAR PRODUCTO</string>
-    <string name="lblTotalPedido">TOTAL DEL PEDIDO:</string>
+    <string name="lblTotalPedido">Total del pedido:</string>
     <string name="btnPedidoQuitarProducto">QUITAR PRODUCTO</string>
     <string name="btnPedidoHacerPedido">HACER PEDIDO</string>
     <string name="btnPedidoVolver">VOLVER</string>
-
 </resources>
