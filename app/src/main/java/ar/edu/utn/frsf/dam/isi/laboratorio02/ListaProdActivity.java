@@ -48,6 +48,8 @@ private Button btnProdAddPedido;
         if(extras!=null){
             int valor=extras.getInt("NUEVO_PEDIDO");
             if(valor==1){
+                edtProdCantidad.setEnabled(true);
+                btnProdAddPedido.setEnabled(true);
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -74,14 +76,15 @@ private Button btnProdAddPedido;
                 public void onNothingSelected(AdapterView<?> parent) { }
             });
         }
-
-        if(btnProdAddPedido.isEnabled()){
-            Intent i = new Intent(this,PedidoActivity.class);
-            i.putExtra("cantidad", edtProdCantidad.getText());
-            i.putExtra("idProducto",cat.getId());
-            startActivity(i);
-        }
-
+        btnProdAddPedido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    Intent i = new Intent(getApplicationContext(),PedidoActivity.class);
+                    i.putExtra("cantidad", edtProdCantidad.getText());
+                    i.putExtra("idProducto",cat.getId());
+                    startActivity(i);
+            }
+        });
     }
     }
 
