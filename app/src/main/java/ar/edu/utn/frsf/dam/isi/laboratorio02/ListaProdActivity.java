@@ -21,15 +21,14 @@ import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
 
 public class ListaProdActivity extends AppCompatActivity {
-private Spinner spinner;
-private ArrayAdapter<Categoria> adapterCategoria;
-private ProductoRepository productoRepository;
-private ListView lstProductos;
-private ArrayAdapter<Producto> adapterLstProductos;
-private Categoria cat;
-private EditText edtProdCantidad;
-private Button btnProdAddPedido;
-
+    private Spinner spinner;
+    private ArrayAdapter<Categoria> adapterCategoria;
+    private ProductoRepository productoRepository;
+    private ListView lstProductos;
+    private ArrayAdapter<Producto> adapterLstProductos;
+    private Categoria cat;
+    private EditText edtProdCantidad;
+    private Button btnProdAddPedido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -39,12 +38,12 @@ private Button btnProdAddPedido;
         spinner = (Spinner) findViewById(R.id.spinner);
         adapterCategoria = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item,productoRepository.getCategorias());
         spinner.setAdapter(adapterCategoria);
-        lstProductos = (ListView) findViewById(R.id.lstProductos);
 
+        lstProductos = (ListView) findViewById(R.id.lstProductos);
         edtProdCantidad = (EditText) findViewById(R.id.edtProdCantidad);
         btnProdAddPedido= (Button) findViewById(R.id.btnProdAddPedido);
-        Bundle extras=getIntent().getExtras();
 
+        Bundle extras=getIntent().getExtras();
         if(extras!=null){
             int valor=extras.getInt("NUEVO_PEDIDO");
             if(valor==1){
@@ -79,12 +78,11 @@ private Button btnProdAddPedido;
         btnProdAddPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Intent i = new Intent(getApplicationContext(),PedidoActivity.class);
-                    i.putExtra("cantidad", edtProdCantidad.getText());
-                    i.putExtra("idProducto",cat.getId());
-                    startActivity(i);
+                Intent i = new Intent(getApplicationContext(),PedidoActivity.class);
+                i.putExtra("cantidad", edtProdCantidad.getText());
+                i.putExtra("idProducto",cat.getId());
+                startActivity(i);
             }
         });
     }
-    }
-
+}

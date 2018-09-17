@@ -30,20 +30,24 @@
         android:text="@string/tvModoEntrega" />
 
     <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/optPedidoRetira"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/radioButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:text="@string/optPedidoRetira" />
 
         <RadioButton
-            android:id="@+id/optPedidoEnviar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/radioButton2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:text="@string/optPedidoEnviar" />
+
     </RadioGroup>
 
     <TextView
@@ -75,8 +79,7 @@
     <ListView
         android:id="@+id/lstPedidoItems"
         android:layout_width="match_parent"
-        android:layout_height="152dp"
-        android:layout_weight="1" />
+        android:layout_height="191dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -113,6 +116,7 @@
             android:id="@+id/btnPedidoHacerPedido"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/btnPedidoHacerPedido" />
 
         <Button
