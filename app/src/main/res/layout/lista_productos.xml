@@ -24,15 +24,17 @@
 
     <ListView
         android:id="@+id/lstProductos"
-        android:layout_width="wrap_content"
-        android:layout_height="388dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:choiceMode="singleChoice"
+        android:layout_weight="1">
 
     </ListView>
 
     <TextView
         android:id="@+id/tvCantidad"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="25dp"
         android:text="@string/tvCantidad" />
 
     <EditText
