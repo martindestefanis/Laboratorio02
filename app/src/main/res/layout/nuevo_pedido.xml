@@ -35,14 +35,14 @@
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/rbRetira"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/optPedidoRetira" />
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/rbEnviar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

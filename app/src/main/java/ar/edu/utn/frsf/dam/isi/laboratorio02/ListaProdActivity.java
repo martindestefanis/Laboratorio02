@@ -4,17 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
@@ -29,6 +24,7 @@ public class ListaProdActivity extends AppCompatActivity {
     private Categoria cat;
     private EditText edtProdCantidad;
     private Button btnProdAddPedido;
+    private Producto producto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -41,7 +37,7 @@ public class ListaProdActivity extends AppCompatActivity {
 
         lstProductos = (ListView) findViewById(R.id.lstProductos);
         edtProdCantidad = (EditText) findViewById(R.id.edtProdCantidad);
-        btnProdAddPedido= (Button) findViewById(R.id.btnProdAddPedido);
+        btnProdAddPedido = (Button) findViewById(R.id.btnProdAddPedido);
 
         Bundle extras=getIntent().getExtras();
         if(extras!=null){
@@ -55,6 +51,7 @@ public class ListaProdActivity extends AppCompatActivity {
                         cat = (Categoria) parent.getItemAtPosition(position);
                         adapterLstProductos = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_single_choice, productoRepository.buscarPorCategoria(cat));
                         lstProductos.setAdapter(adapterLstProductos);
+                        producto = (Producto) lstProductos.getSelectedItem();
                     }
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) { }
@@ -78,9 +75,9 @@ public class ListaProdActivity extends AppCompatActivity {
         btnProdAddPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),PedidoActivity.class);
+                Intent i = new Intent(getApplicationContext(), PedidoActivity.class);
                 i.putExtra("cantidad", edtProdCantidad.getText());
-                i.putExtra("idProducto",cat.getId());
+                i.putExtra("idProducto",producto.getId());
                 startActivity(i);
             }
         });
