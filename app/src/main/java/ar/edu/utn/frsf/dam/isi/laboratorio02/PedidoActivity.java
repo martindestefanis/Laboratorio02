@@ -3,6 +3,7 @@ package ar.edu.utn.frsf.dam.isi.laboratorio02;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.view.View;
+import android.widget.TextView;
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
@@ -32,6 +34,7 @@ public class PedidoActivity extends AppCompatActivity{
     private Producto producto;
     private Intent i;
     private static final int CODIGO = 999;
+    private TextView lblTotalPedido;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -59,26 +62,36 @@ public class PedidoActivity extends AppCompatActivity{
         lstPedidoItems = (ListView) findViewById(R.id.lstPedidoItems);
         adapterLstPedidoItems = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_single_choice, unPedido.getDetalle());
         lstPedidoItems.setAdapter(adapterLstPedidoItems);
+        lblTotalPedido=(TextView) findViewById(R.id.lblTotalPedido);
 
         btnPedidoAddProducto = (Button) findViewById(R.id.btnPedidoAddProducto);
         btnPedidoAddProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 i = new Intent(getApplicationContext(), ListaProdActivity.class);
-                startActivityForResult(i, CODIGO);
+                i.putExtra("NUEVO_PEDIDO",1);
+                startActivityForResult(i,CODIGO);
             }
         });
+        }
 
-        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-            if (resultCode == Activity.RESULT_OK) {
-                if (requestCode == CODIGO) {
-                    extraID = data.getExtras.getInt("idProducto");
-                    repositorioProducto = new ProductoRepository();
-                    producto = repositorioProducto.buscarPorId(extraID);
-                    extraCantidad = data.getExtras.getInt("cantidad");
-                    unPedidoDetalle = new PedidoDetalle(extraCantidad, producto);
-                }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == CODIGO) {
+                extraID=data.getExtras().getInt("idProducto");
+                repositorioProducto = new ProductoRepository();
+                producto = repositorioProducto.buscarPorId(extraID);
+                extraCantidad = data.getExtras().getInt("cantidad");
+                unPedidoDetalle = new PedidoDetalle(extraCantidad, producto);
+                unPedidoDetalle=new PedidoDetalle(extraCantidad,producto);
+                unPedidoDetalle.setPedido(unPedido);
+                adapterLstPedidoItems.notifyDataSetChanged();
+                lblTotalPedido.setText("Total del pedido: $" + unPedido.total());
+
             }
         }
     }
-}
+    }
+
