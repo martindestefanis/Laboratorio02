@@ -1,9 +1,11 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -48,10 +50,17 @@ public class ListaProdActivity extends AppCompatActivity {
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        lstProductos.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
                         cat = (Categoria) parent.getItemAtPosition(position);
                         adapterLstProductos = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_single_choice, productoRepository.buscarPorCategoria(cat));
                         lstProductos.setAdapter(adapterLstProductos);
-                        producto = (Producto) lstProductos.getSelectedItem();
+                        lstProductos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                producto= (Producto) parent.getItemAtPosition(position);
+                            }
+                        });
+
                     }
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) { }
@@ -76,9 +85,10 @@ public class ListaProdActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), PedidoActivity.class);
-                i.putExtra("cantidad", edtProdCantidad.getText());
+                i.putExtra("cantidad", Integer.valueOf(edtProdCantidad.getText().toString()));
                 i.putExtra("idProducto",producto.getId());
-                startActivity(i);
+                setResult(Activity.RESULT_OK,i);
+                finish();
             }
         });
     }
