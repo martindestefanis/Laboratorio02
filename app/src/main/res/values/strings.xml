@@ -18,4 +18,7 @@
     <string name="btnPedidoQuitarProducto">QUITAR PRODUCTO</string>
     <string name="btnPedidoHacerPedido">HACER PEDIDO</string>
     <string name="btnPedidoVolver">VOLVER</string>
+    <string name="tvPedidosRealizados">Pedidos Realizados</string>
+    <string name="btnHistorialNuevo">NUEVO</string>
+    <string name="btnHistorialMenu">MENU</string>
 </resources>
