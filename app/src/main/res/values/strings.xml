@@ -21,4 +21,11 @@
     <string name="tvPedidosRealizados">Pedidos Realizados</string>
     <string name="btnHistorialNuevo">NUEVO</string>
     <string name="btnHistorialMenu">MENU</string>
+    <string name="lblEmail">Contacto:</string>
+    <string name="lblFechaEntrega">Feha de entrega:</string>
+    <string name="lblItems">Items:</string>
+    <string name="lblAPagar">A Pagar:</string>
+    <string name="lblEstado">Estado:</string>
+    <string name="btnCancelar">CANCELAR</string>
+
 </resources>

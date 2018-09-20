@@ -78,7 +78,8 @@
     <ListView
         android:id="@+id/lstPedidoItems"
         android:layout_width="match_parent"
-        android:layout_height="191dp" />
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -87,15 +88,15 @@
 
         <Button
             android:id="@+id/btnPedidoAddProducto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/btnPedidoAddProducto" />
 
         <Button
             android:id="@+id/btnPedidoQuitarProducto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/btnPedidoQuitarProducto" />
     </LinearLayout>
@@ -113,15 +114,15 @@
 
         <Button
             android:id="@+id/btnPedidoHacerPedido"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/btnPedidoHacerPedido" />
 
         <Button
             android:id="@+id/btnPedidoVolver"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/btnPedidoVolver" />
     </LinearLayout>

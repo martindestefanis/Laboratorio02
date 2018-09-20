@@ -42,6 +42,7 @@ public class PedidoActivity extends AppCompatActivity{
     private Button btnPedidoHacerPedido;
     private EditText edtPedidoCorreo;
     private EditText edtPedidoHoraEntrega;
+    private Button btnPedidoVolver;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -140,7 +141,7 @@ public class PedidoActivity extends AppCompatActivity{
                     unPedido.setRetirar(false);
                 }
                 repositorioPedido = new PedidoRepository();
-                repositorioPedido.guardarPedido(unPedido); //ACA SE ROMPE!!
+                repositorioPedido.guardarPedido(unPedido);
                 unPedido = new Pedido();
                 Log.d("APP_LAB02","Pedido "+unPedido.toString());
 
@@ -148,6 +149,16 @@ public class PedidoActivity extends AppCompatActivity{
                 startActivity(intent);
             }
         });
+        btnPedidoVolver = (Button) findViewById(R.id.btnPedidoVolver);
+        btnPedidoVolver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(PedidoActivity.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
+
+
     }
 
     @Override
