@@ -139,6 +139,7 @@ public class PedidoActivity extends AppCompatActivity{
                 else {
                     unPedido.setRetirar(false);
                 }
+                repositorioPedido = new PedidoRepository();
                 repositorioPedido.guardarPedido(unPedido); //ACA SE ROMPE!!
                 unPedido = new Pedido();
                 Log.d("APP_LAB02","Pedido "+unPedido.toString());
