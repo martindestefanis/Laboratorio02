@@ -15,7 +15,6 @@ public class HistorialActivity extends AppCompatActivity{
         setContentView(R.layout.historial_pedidos);
 
         /* ACA VA LO DEL LIST VIEW*/
-
         btnHistorialNuevo = (Button) findViewById(R.id.btnHistorialNuevo);
         btnhistorialMenu = (Button) findViewById(R.id.btnhistorialMenu);
         btnHistorialNuevo.setOnClickListener(new View.OnClickListener() {
