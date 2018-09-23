@@ -17,15 +17,18 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ListaProdActivity">
+        <activity android:name=".ListaProdActivity"
+            android:windowSoftInputMode="stateHidden">
 
         </activity>
 
-        <activity android:name=".PedidoActivity">
+        <activity android:name=".PedidoActivity"
+            android:windowSoftInputMode="stateHidden">
 
         </activity>
 
-        <activity android:name=".HistorialActivity">
+        <activity android:name=".HistorialActivity"
+            android:windowSoftInputMode="stateHidden">
 
         </activity>
 

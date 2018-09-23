@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <TextView
@@ -73,7 +73,7 @@
         android:id="@+id/edtPedidoHoraEntrega"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="time"/>
+        android:inputType="time" />
 
     <ListView
         android:id="@+id/lstPedidoItems"
@@ -109,20 +109,21 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnPedidoHacerPedido"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/btnPedidoHacerPedido" />
 
         <Button
             android:id="@+id/btnPedidoVolver"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/btnPedidoVolver" />
     </LinearLayout>
