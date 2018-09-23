@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
         btnListaProductos = (Button) findViewById(R.id.btnListaProductos);
         btnListaProductos.setOnClickListener(new View.OnClickListener() {
             @Override
