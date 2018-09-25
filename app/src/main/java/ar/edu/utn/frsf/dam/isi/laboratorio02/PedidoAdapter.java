@@ -1,6 +1,5 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -35,7 +34,7 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
             fila_historial = inflater.inflate(R.layout.fila_historial, parent, false);
         }
         pedidoHolder = (PedidoHolder) fila_historial.getTag();
-        if (pedidoHolder == null){
+        if (pedidoHolder == null) {
             pedidoHolder = new PedidoHolder(fila_historial);
             fila_historial.setTag(pedidoHolder);
         }
@@ -58,9 +57,9 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
                     public void onClick(View view) {
                         int indice = (int) view.getTag();
                         Pedido pedidoSeleccionado = datos.get(indice);
-                        if( pedidoSeleccionado.getEstado().equals(Pedido.Estado.REALIZADO)||
-                                pedidoSeleccionado.getEstado().equals(Pedido.Estado.ACEPTADO)||
-                                pedidoSeleccionado.getEstado().equals(Pedido.Estado.EN_PREPARACION)){
+                        if( pedidoSeleccionado.getEstado().equals(Pedido.Estado.REALIZADO) ||
+                                pedidoSeleccionado.getEstado().equals(Pedido.Estado.ACEPTADO) ||
+                                pedidoSeleccionado.getEstado().equals(Pedido.Estado.EN_PREPARACION)) {
                             pedidoSeleccionado.setEstado(Pedido.Estado.CANCELADO);
                             PedidoAdapter.this.notifyDataSetChanged();
                             return;
@@ -94,18 +93,16 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
         }
         pedidoHolder.btnCancelar.setTag(position);
 
-
         pedidoHolder.btnVerDetalle.setTag(position);
         pedidoHolder.btnVerDetalle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(ctx,PedidoActivity.class);
-                i.putExtra("idPedidoSeleccionado",pedido.getId());
-                Log.d("Database", "idPedidoSeleccionado salida "+pedido.getId().toString());
+                Intent i = new Intent(ctx, PedidoActivity.class);
+                i.putExtra("idPedidoSeleccionado", pedido.getId());
+                Log.d("Database", "idPedidoSeleccionado salida " + pedido.getId().toString());
                 ctx.startActivity(i);
             }
         });
-
 
         return fila_historial;
     }

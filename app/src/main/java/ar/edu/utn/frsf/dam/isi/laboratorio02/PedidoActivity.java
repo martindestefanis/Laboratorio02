@@ -31,20 +31,15 @@ public class PedidoActivity extends AppCompatActivity{
     private PedidoRepository repositorioPedido;
     private ProductoRepository repositorioProducto;
     private RadioButton rbRetira, rbEnviar;
-    private EditText edtPedidoDireccion;
+    private EditText edtPedidoDireccion, edtPedidoCorreo, edtPedidoHoraEntrega;
     private ListView lstPedidoItems;
     private ArrayAdapter<PedidoDetalle> adapterLstPedidoItems;
-    private Button btnPedidoAddProducto;
-    private Bundle extras;
+    private Button btnPedidoAddProducto, btnPedidoHacerPedido, btnPedidoVolver;
     private int extraID, extraCantidad;
     private Producto producto;
     private Intent i;
     private static final int CODIGO = 999;
     private TextView lblTotalPedido;
-    private Button btnPedidoHacerPedido;
-    private EditText edtPedidoCorreo;
-    private EditText edtPedidoHoraEntrega;
-    private Button btnPedidoVolver;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -56,14 +51,14 @@ public class PedidoActivity extends AppCompatActivity{
         edtPedidoDireccion = (EditText) findViewById(R.id.edtPedidoDireccion);
         edtPedidoCorreo = (EditText) findViewById(R.id.edtPedidoCorreo);
         edtPedidoHoraEntrega = (EditText) findViewById(R.id.edtPedidoHoraEntrega);
+        repositorioPedido = new PedidoRepository();
 
-        Intent i1= getIntent();
+        Intent i1 = getIntent();
         Integer idPedido = 0;
         if(i1.getExtras()!=null) {
             idPedido = i1.getExtras().getInt("idPedidoSeleccionado");
         }
-        if(idPedido>0){
-            repositorioPedido = new PedidoRepository();
+        if(idPedido>0) {
             unPedido = repositorioPedido.buscarPorId(idPedido);
             edtPedidoCorreo.setText(unPedido.getMailContacto());
             edtPedidoDireccion.setText(unPedido.getDireccionEnvio());
@@ -71,13 +66,13 @@ public class PedidoActivity extends AppCompatActivity{
             edtPedidoHoraEntrega.setText(sdf.format(unPedido.getFecha()));
             rbEnviar.setChecked(!unPedido.getRetirar());
             rbRetira.setChecked(unPedido.getRetirar());
-            if(rbRetira.isChecked()){
+            if(rbRetira.isChecked()) {
                 edtPedidoDireccion.setEnabled(false);
             }
-        }else {
+        }
+        else {
             unPedido = new Pedido();
         }
-
 
         rbRetira.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +91,7 @@ public class PedidoActivity extends AppCompatActivity{
         lstPedidoItems = (ListView) findViewById(R.id.lstPedidoItems);
         adapterLstPedidoItems = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_single_choice, unPedido.getDetalle());
         lstPedidoItems.setAdapter(adapterLstPedidoItems);
-        lblTotalPedido=(TextView) findViewById(R.id.lblTotalPedido);
+        lblTotalPedido = (TextView) findViewById(R.id.lblTotalPedido);
 
         btnPedidoAddProducto = (Button) findViewById(R.id.btnPedidoAddProducto);
         btnPedidoAddProducto.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +99,7 @@ public class PedidoActivity extends AppCompatActivity{
             public void onClick(View v) {
                 i = new Intent(getApplicationContext(), ListaProdActivity.class);
                 i.putExtra("NUEVO_PEDIDO",1);
-                startActivityForResult(i,CODIGO);
+                startActivityForResult(i, CODIGO);
             }
         });
 
@@ -114,8 +109,7 @@ public class PedidoActivity extends AppCompatActivity{
             public void onClick(View v) {
                 GregorianCalendar hora = new GregorianCalendar();
                 int valorHora = 0, valorMinuto = 0;
-                if(edtPedidoCorreo.getText().toString().isEmpty())
-                {
+                if(edtPedidoCorreo.getText().toString().isEmpty()) {
                     Toast tstCamposVacios = Toast.makeText(getApplicationContext(), "Debe ingresar un e-mail", Toast.LENGTH_LONG);
                     tstCamposVacios.show();
                     return;
@@ -152,7 +146,7 @@ public class PedidoActivity extends AppCompatActivity{
                 }
                 hora.set(Calendar.HOUR_OF_DAY, valorHora);
                 hora.set(Calendar.MINUTE, valorMinuto);
-                hora.set(Calendar.SECOND,Integer.valueOf(0));
+                hora.set(Calendar.SECOND, Integer.valueOf(0));
                 unPedido.setFecha(hora.getTime());
                 unPedido.setEstado(Pedido.Estado.REALIZADO);
                 unPedido.setDireccionEnvio(edtPedidoDireccion.getText().toString());
@@ -163,7 +157,6 @@ public class PedidoActivity extends AppCompatActivity{
                 else {
                     unPedido.setRetirar(false);
                 }
-                repositorioPedido = new PedidoRepository();
                 repositorioPedido.guardarPedido(unPedido);
                 unPedido = new Pedido();
                 Log.d("APP_LAB02","Pedido "+unPedido.toString());
@@ -180,8 +173,6 @@ public class PedidoActivity extends AppCompatActivity{
                 startActivity(i);
             }
         });
-
-
     }
 
     @Override
@@ -201,4 +192,3 @@ public class PedidoActivity extends AppCompatActivity{
         }
     }
 }
-

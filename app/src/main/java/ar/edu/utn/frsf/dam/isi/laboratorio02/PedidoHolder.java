@@ -7,14 +7,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class PedidoHolder extends AppCompatActivity {
-    Button btnCancelar;
-    TextView tvMailPedido;
-    TextView tvHoraEntrega;
-    TextView tvCantidadItems;
-    TextView tvPrecio;
-    TextView estado;
+    Button btnCancelar, btnVerDetalle;
+    TextView tvMailPedido, tvHoraEntrega, tvCantidadItems, tvPrecio, estado;
     ImageView tipoEntrega;
-    Button btnVerDetalle;
 
     public PedidoHolder(View base) {
         this.btnCancelar = (Button) base.findViewById(R.id.btnCancelar);

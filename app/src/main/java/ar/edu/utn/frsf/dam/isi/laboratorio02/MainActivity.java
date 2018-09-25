@@ -8,9 +8,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnNuevoPedido;
-    private Button btnHistorial;
-    private Button btnListaProductos;
+    private Button btnNuevoPedido, btnHistorial, btnListaProductos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

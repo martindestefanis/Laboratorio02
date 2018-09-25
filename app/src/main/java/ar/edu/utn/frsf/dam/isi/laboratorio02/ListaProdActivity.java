@@ -29,7 +29,7 @@ public class ListaProdActivity extends AppCompatActivity {
     private Producto producto;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lista_productos);
         productoRepository = new ProductoRepository();
@@ -42,9 +42,9 @@ public class ListaProdActivity extends AppCompatActivity {
         btnProdAddPedido = (Button) findViewById(R.id.btnProdAddPedido);
 
         Bundle extras=getIntent().getExtras();
-        if(extras!=null){
+        if(extras!=null) {
             int valor=extras.getInt("NUEVO_PEDIDO");
-            if(valor==1){
+            if(valor==1) {
                 edtProdCantidad.setEnabled(true);
                 btnProdAddPedido.setEnabled(true);
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -60,14 +60,13 @@ public class ListaProdActivity extends AppCompatActivity {
                                 producto= (Producto) parent.getItemAtPosition(position);
                             }
                         });
-
                     }
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) { }
                 });
             }
         }
-        else{
+        else {
             edtProdCantidad.setEnabled(false);
             btnProdAddPedido.setEnabled(false);
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
