@@ -7,10 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.view.View;
-import android.widget.Toast;
-
 import java.util.List;
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
@@ -35,29 +32,28 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
             fila_historial = inflater.inflate(R.layout.fila_historial, parent, false);
         }
         pedidoHolder = (PedidoHolder) fila_historial.getTag();
-
         if (pedidoHolder == null){
-            pedidoHolder=new PedidoHolder(fila_historial);
+            pedidoHolder = new PedidoHolder(fila_historial);
             fila_historial.setTag(pedidoHolder);
         }
-        //VER ESTA LINEA
         Pedido pedido = (Pedido) super.getItem(position);
         pedidoHolder.tvMailPedido.setText("Contacto: " + pedido.getMailContacto());
         pedidoHolder.tvHoraEntrega.setText("Fecha de entrega: " + pedido.getFecha().toString());
         pedidoHolder.tvPrecio.setText("A pagar: $" + pedido.total().toString());
         pedidoHolder.tvCantidadItems.setText("Items: " + pedido.getDetalle().size());
         pedidoHolder.estado.setText("Estado: " + pedido.getEstado().toString());
-        //Falta y imagen
-
+        if (pedido.getRetirar()) {
+            pedidoHolder.tipoEntrega.setImageResource(R.drawable.retira);
+        }
+        else {
+            pedidoHolder.tipoEntrega.setImageResource(R.drawable.envio);
+        }
         pedidoHolder.btnCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int indice = (int) view.getTag();
                 Pedido pedidoSeleccionado = datos.get(indice);
-                if( pedidoSeleccionado.getEstado().equals(Pedido.Estado.REALIZADO)||
-                        pedidoSeleccionado.getEstado().equals(Pedido.Estado.ACEPTADO)||
-                        pedidoSeleccionado.getEstado().equals(Pedido.Estado.EN_PREPARACION))
-                {
+                if( pedidoSeleccionado.getEstado().equals(Pedido.Estado.REALIZADO)|| pedidoSeleccionado.getEstado().equals(Pedido.Estado.ACEPTADO)|| pedidoSeleccionado.getEstado().equals(Pedido.Estado.EN_PREPARACION)) {
                     pedidoSeleccionado.setEstado(Pedido.Estado.CANCELADO);
                     PedidoAdapter.this.notifyDataSetChanged();
                     return;
@@ -72,7 +68,9 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
             case ENTREGADO:
                 pedidoHolder.estado.setTextColor(Color.BLUE);
                 break;
-            //case CANCELADO:
+            case CANCELADO:
+                pedidoHolder.estado.setTextColor(Color.RED);
+                break;
             case RECHAZADO:
                 pedidoHolder.estado.setTextColor(Color.RED);
                 break;

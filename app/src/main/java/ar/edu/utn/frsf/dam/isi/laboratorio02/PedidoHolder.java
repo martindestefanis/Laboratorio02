@@ -6,10 +6,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
-
-
-public class PedidoHolder extends AppCompatActivity{
+public class PedidoHolder extends AppCompatActivity {
     Button btnCancelar;
     TextView tvMailPedido;
     TextView tvHoraEntrega;
@@ -18,15 +15,13 @@ public class PedidoHolder extends AppCompatActivity{
     TextView estado;
     ImageView tipoEntrega;
 
-    PedidoHolder(View base) {
+    public PedidoHolder(View base) {
         this.btnCancelar = (Button) base.findViewById(R.id.btnCancelar);
         this.tvMailPedido = (TextView) base.findViewById(R.id.tvEmail);
         this.tvHoraEntrega = (TextView) base.findViewById(R.id.tvFechaEntrega);
         this.tvCantidadItems = (TextView) base.findViewById(R.id.tvItems);
         this.tvPrecio = (TextView) base.findViewById(R.id.tvAPagar);
         this.estado = (TextView) base.findViewById(R.id.lblEstado);
-        //Falta el imageView
+        this.tipoEntrega = (ImageView) base.findViewById(R.id.ivTipoEntrega);
     }
-    }
-
-
+}
