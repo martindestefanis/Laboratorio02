@@ -18,7 +18,7 @@ public class PedidoRepository {
         if(p.getId()!=null && p.getId()>0) {
             LISTA_PEDIDOS.remove(p);
         }else{
-            p.setId(GENERADOR_ID_PEDIDO ++);
+            p.setId(++GENERADOR_ID_PEDIDO);
         }
         LISTA_PEDIDOS.add(p);
     }

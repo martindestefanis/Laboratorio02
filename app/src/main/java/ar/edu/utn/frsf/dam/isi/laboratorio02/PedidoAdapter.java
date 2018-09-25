@@ -1,9 +1,12 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -36,7 +39,7 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
             pedidoHolder = new PedidoHolder(fila_historial);
             fila_historial.setTag(pedidoHolder);
         }
-        Pedido pedido = (Pedido) super.getItem(position);
+        final Pedido pedido = (Pedido) super.getItem(position);
         pedidoHolder.tvMailPedido.setText("Contacto: " + pedido.getMailContacto());
         pedidoHolder.tvHoraEntrega.setText("Fecha de entrega: " + pedido.getFecha().toString());
         pedidoHolder.tvPrecio.setText("A pagar: $" + pedido.total().toString());
@@ -48,18 +51,23 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
         else {
             pedidoHolder.tipoEntrega.setImageResource(R.drawable.envio);
         }
-        pedidoHolder.btnCancelar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int indice = (int) view.getTag();
-                Pedido pedidoSeleccionado = datos.get(indice);
-                if( pedidoSeleccionado.getEstado().equals(Pedido.Estado.REALIZADO)|| pedidoSeleccionado.getEstado().equals(Pedido.Estado.ACEPTADO)|| pedidoSeleccionado.getEstado().equals(Pedido.Estado.EN_PREPARACION)) {
-                    pedidoSeleccionado.setEstado(Pedido.Estado.CANCELADO);
-                    PedidoAdapter.this.notifyDataSetChanged();
-                    return;
+
+        pedidoHolder.btnCancelar.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        int indice = (int) view.getTag();
+                        Pedido pedidoSeleccionado = datos.get(indice);
+                        if( pedidoSeleccionado.getEstado().equals(Pedido.Estado.REALIZADO)||
+                                pedidoSeleccionado.getEstado().equals(Pedido.Estado.ACEPTADO)||
+                                pedidoSeleccionado.getEstado().equals(Pedido.Estado.EN_PREPARACION)){
+                            pedidoSeleccionado.setEstado(Pedido.Estado.CANCELADO);
+                            PedidoAdapter.this.notifyDataSetChanged();
+                            return;
+                        }
+                    }
                 }
-            }
-        });
+        );
 
         switch (pedido.getEstado()){
             case LISTO:
@@ -84,6 +92,20 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
                 pedidoHolder.estado.setTextColor(Color.BLUE);
                 break;
         }
+        pedidoHolder.btnCancelar.setTag(position);
+
+
+        pedidoHolder.btnVerDetalle.setTag(position);
+        pedidoHolder.btnVerDetalle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ctx,PedidoActivity.class);
+                i.putExtra("idPedidoSeleccionado",pedido.getId());
+                Log.d("Database", "idPedidoSeleccionado salida "+pedido.getId().toString());
+                ctx.startActivity(i);
+            }
+        });
+
 
         return fila_historial;
     }

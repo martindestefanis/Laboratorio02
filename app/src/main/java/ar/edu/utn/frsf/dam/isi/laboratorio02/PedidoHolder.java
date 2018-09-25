@@ -14,6 +14,7 @@ public class PedidoHolder extends AppCompatActivity {
     TextView tvPrecio;
     TextView estado;
     ImageView tipoEntrega;
+    Button btnVerDetalle;
 
     public PedidoHolder(View base) {
         this.btnCancelar = (Button) base.findViewById(R.id.btnCancelar);
@@ -23,5 +24,6 @@ public class PedidoHolder extends AppCompatActivity {
         this.tvPrecio = (TextView) base.findViewById(R.id.tvAPagar);
         this.estado = (TextView) base.findViewById(R.id.lblEstado);
         this.tipoEntrega = (ImageView) base.findViewById(R.id.ivTipoEntrega);
+        this.btnVerDetalle = (Button) base.findViewById(R.id.btnVerDetalle);
     }
 }

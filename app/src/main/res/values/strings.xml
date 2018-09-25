@@ -27,5 +27,7 @@
     <string name="lblAPagar">A Pagar:</string>
     <string name="lblEstado">Estado:</string>
     <string name="btnCancelar">CANCELAR</string>
+    <string name="btnVerDetalle">VER DETALLE</string>
+
 
 </resources>

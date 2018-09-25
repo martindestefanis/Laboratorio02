@@ -14,6 +14,8 @@ import android.widget.RadioButton;
 import android.view.View;
 import android.widget.Toast;
 import android.widget.TextView;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -55,6 +57,28 @@ public class PedidoActivity extends AppCompatActivity{
         edtPedidoCorreo = (EditText) findViewById(R.id.edtPedidoCorreo);
         edtPedidoHoraEntrega = (EditText) findViewById(R.id.edtPedidoHoraEntrega);
 
+        Intent i1= getIntent();
+        Integer idPedido = 0;
+        if(i1.getExtras()!=null) {
+            idPedido = i1.getExtras().getInt("idPedidoSeleccionado");
+        }
+        if(idPedido>0){
+            repositorioPedido = new PedidoRepository();
+            unPedido = repositorioPedido.buscarPorId(idPedido);
+            edtPedidoCorreo.setText(unPedido.getMailContacto());
+            edtPedidoDireccion.setText(unPedido.getDireccionEnvio());
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            edtPedidoHoraEntrega.setText(sdf.format(unPedido.getFecha()));
+            rbEnviar.setChecked(!unPedido.getRetirar());
+            rbRetira.setChecked(unPedido.getRetirar());
+            if(rbRetira.isChecked()){
+                edtPedidoDireccion.setEnabled(false);
+            }
+        }else {
+            unPedido = new Pedido();
+        }
+
+
         rbRetira.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,7 +112,6 @@ public class PedidoActivity extends AppCompatActivity{
         btnPedidoHacerPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean a;
                 GregorianCalendar hora = new GregorianCalendar();
                 int valorHora = 0, valorMinuto = 0;
                 if(edtPedidoCorreo.getText().toString().isEmpty())
