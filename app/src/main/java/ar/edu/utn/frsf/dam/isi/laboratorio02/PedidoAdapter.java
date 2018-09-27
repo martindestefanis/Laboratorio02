@@ -91,6 +91,7 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
                 pedidoHolder.estado.setTextColor(Color.BLUE);
                 break;
         }
+
         pedidoHolder.btnCancelar.setTag(position);
 
         pedidoHolder.btnVerDetalle.setTag(position);
