@@ -1,9 +1,13 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -173,8 +177,15 @@ public class PedidoActivity extends AppCompatActivity{
                         // buscar pedidos no aceptados y aceptarlos utomáticamente
                         List<Pedido> lista = repositorioPedido.getLista();
                         for(Pedido p:lista){
-                            if(p.getEstado().equals(Pedido.Estado.REALIZADO))
+                            if(p.getEstado().equals(Pedido.Estado.REALIZADO)) {
                                 p.setEstado(Pedido.Estado.ACEPTADO);
+
+                                Intent intent = new Intent(getApplicationContext(),EstadoPedidoReceiver.class);
+                                intent.setAction(EstadoPedidoReceiver.ESTADO_ACEPTADO);
+                                intent.putExtra("idPedido",p.getId());
+                                getApplicationContext().sendBroadcast(intent);
+                            }
+
                         }
                         runOnUiThread(new Runnable() {
                             @Override
