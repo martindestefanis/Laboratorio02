@@ -31,7 +31,7 @@ import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoDetalle;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
 
 public class PedidoActivity extends AppCompatActivity{
-    private Pedido unPedido;
+    private Pedido unPedido,unPedido2;
     private PedidoDetalle unPedidoDetalle;
     private PedidoRepository repositorioPedido;
     private ProductoRepository repositorioProducto;
@@ -74,10 +74,33 @@ public class PedidoActivity extends AppCompatActivity{
             if(rbRetira.isChecked()) {
                 edtPedidoDireccion.setEnabled(false);
             }
-        }
-        else {
+        } else {
             unPedido = new Pedido();
         }
+        /*
+        Ver lo de que cuando se clickea la notificacion se abra PedidoActivity con los datos, no anda
+
+        Intent i2=getIntent();
+        Integer idPedido1=0;
+        if(i2.getExtras()!=null) {
+            idPedido1 = i1.getExtras().getInt("idPed");
+        }
+        if(idPedido1>0){
+            idPedido1 = i1.getExtras().getInt("idPed");
+            unPedido2 = repositorioPedido.buscarPorId(idPedido);
+            edtPedidoCorreo.setText(unPedido2.getMailContacto());
+            edtPedidoDireccion.setText(unPedido2.getDireccionEnvio());
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            edtPedidoHoraEntrega.setText(sdf.format(unPedido.getFecha()));
+            rbEnviar.setChecked(!unPedido2.getRetirar());
+            rbRetira.setChecked(unPedido2.getRetirar());
+            if(rbRetira.isChecked()) {
+                edtPedidoDireccion.setEnabled(false);
+            }
+        } else {
+            unPedido2 = new Pedido();
+        }
+        */
 
         rbRetira.setOnClickListener(new View.OnClickListener() {
             @Override
