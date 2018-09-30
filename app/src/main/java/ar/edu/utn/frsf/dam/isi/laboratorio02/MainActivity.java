@@ -17,8 +17,8 @@ public class MainActivity extends AppCompatActivity {
         // dado que NotificationChannel es una clase nueva que no está incluida
         // en las librerías de soporte qeu brindan compatibilidad hacía atrás
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Canal de prueba"; //TODO Cambiar esto para que no se hardcodee.
-            String description = "Descripcion de prueba";
+            CharSequence name = getString(R.string.channelName);
+            String description = getString(R.string.channelDescription);
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel("CANAL01", name, importance);
             channel.setDescription(description);

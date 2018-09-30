@@ -1,6 +1,7 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -31,7 +32,7 @@ import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoDetalle;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
 
 public class PedidoActivity extends AppCompatActivity{
-    private Pedido unPedido,unPedido2;
+    private Pedido unPedido;
     private PedidoDetalle unPedidoDetalle;
     private PedidoRepository repositorioPedido;
     private ProductoRepository repositorioProducto;
@@ -56,6 +57,9 @@ public class PedidoActivity extends AppCompatActivity{
         edtPedidoDireccion = (EditText) findViewById(R.id.edtPedidoDireccion);
         edtPedidoCorreo = (EditText) findViewById(R.id.edtPedidoCorreo);
         edtPedidoHoraEntrega = (EditText) findViewById(R.id.edtPedidoHoraEntrega);
+        btnPedidoAddProducto = (Button) findViewById(R.id.btnPedidoAddProducto);
+        btnPedidoHacerPedido = (Button) findViewById(R.id.btnPedidoHacerPedido);
+        lstPedidoItems = (ListView) findViewById(R.id.lstPedidoItems);
         repositorioPedido = new PedidoRepository();
 
         Intent i1 = getIntent();
@@ -74,33 +78,24 @@ public class PedidoActivity extends AppCompatActivity{
             if(rbRetira.isChecked()) {
                 edtPedidoDireccion.setEnabled(false);
             }
+           adapterLstPedidoItems = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_single_choice, unPedido.getDetalle());
+           lstPedidoItems.setAdapter(adapterLstPedidoItems);
+
+            edtPedidoCorreo.setEnabled(false);
+            edtPedidoDireccion.setEnabled(false);
+            edtPedidoHoraEntrega.setEnabled(false);
+            rbEnviar.setEnabled(false);
+            rbRetira.setEnabled(false);
+            btnPedidoAddProducto.setEnabled(false);
+            btnPedidoHacerPedido.setEnabled(false);
+            lstPedidoItems.setChoiceMode(ListView.CHOICE_MODE_NONE);
+            lstPedidoItems.setEnabled(false);
         } else {
             unPedido = new Pedido();
+            adapterLstPedidoItems = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_single_choice, unPedido.getDetalle());
+            lstPedidoItems.setAdapter(adapterLstPedidoItems);
         }
-        /*
-        Ver lo de que cuando se clickea la notificacion se abra PedidoActivity con los datos, no anda
 
-        Intent i2=getIntent();
-        Integer idPedido1=0;
-        if(i2.getExtras()!=null) {
-            idPedido1 = i1.getExtras().getInt("idPed");
-        }
-        if(idPedido1>0){
-            idPedido1 = i1.getExtras().getInt("idPed");
-            unPedido2 = repositorioPedido.buscarPorId(idPedido);
-            edtPedidoCorreo.setText(unPedido2.getMailContacto());
-            edtPedidoDireccion.setText(unPedido2.getDireccionEnvio());
-            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-            edtPedidoHoraEntrega.setText(sdf.format(unPedido.getFecha()));
-            rbEnviar.setChecked(!unPedido2.getRetirar());
-            rbRetira.setChecked(unPedido2.getRetirar());
-            if(rbRetira.isChecked()) {
-                edtPedidoDireccion.setEnabled(false);
-            }
-        } else {
-            unPedido2 = new Pedido();
-        }
-        */
 
         rbRetira.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,13 +110,8 @@ public class PedidoActivity extends AppCompatActivity{
             }
         });
 
-        unPedido = new Pedido();
-        lstPedidoItems = (ListView) findViewById(R.id.lstPedidoItems);
-        adapterLstPedidoItems = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_single_choice, unPedido.getDetalle());
-        lstPedidoItems.setAdapter(adapterLstPedidoItems);
         lblTotalPedido = (TextView) findViewById(R.id.lblTotalPedido);
 
-        btnPedidoAddProducto = (Button) findViewById(R.id.btnPedidoAddProducto);
         btnPedidoAddProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,7 +121,6 @@ public class PedidoActivity extends AppCompatActivity{
             }
         });
 
-        btnPedidoHacerPedido = (Button) findViewById(R.id.btnPedidoHacerPedido);
         btnPedidoHacerPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -192,12 +181,12 @@ public class PedidoActivity extends AppCompatActivity{
                 Runnable r = new Runnable() {
                     @Override
                     public void run() {
-                        try { Thread.currentThread().sleep(10000);
+                        try { Thread.currentThread().sleep(5000);
                         }
                         catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        // buscar pedidos no aceptados y aceptarlos utomáticamente
+
                         List<Pedido> lista = repositorioPedido.getLista();
                         for(Pedido p:lista){
                             if(p.getEstado().equals(Pedido.Estado.REALIZADO)) {

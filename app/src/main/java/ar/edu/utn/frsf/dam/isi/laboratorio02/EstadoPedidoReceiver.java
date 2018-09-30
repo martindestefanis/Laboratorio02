@@ -1,5 +1,6 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -13,7 +14,7 @@ import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
 
 
 public class EstadoPedidoReceiver extends BroadcastReceiver {
-    public static final String ESTADO_ACEPTADO=".EstadoPedidoReciever.ESTADO_ACEPTADO";
+    public static final String ESTADO_ACEPTADO="ar.edu.utn.frsf.dam.isi.laboratorio02.ESTADO_ACEPTADO";
     @Override
     public void onReceive(Context context, Intent intent) {
         PedidoRepository pedidoRepository = new PedidoRepository();
@@ -23,14 +24,13 @@ public class EstadoPedidoReceiver extends BroadcastReceiver {
             Toast.makeText(context,"Pedido para " + pedido.getMailContacto() + " ha cambiado de estado a " + pedido.getEstado() ,Toast.LENGTH_LONG).show();
         }
 
-        //Ver lo de que cuando se clickea la notificacion se abra PedidoActivity con los datos, no anda
-        Intent destino= new Intent(context,PedidoActivity.class);
-        destino.putExtra("idPed",pedido.getId());
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        //PendingIntent pendingIntent = PendingIntent.getBroadcast(context,0 , intent,PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context,0,destino,0);
 
-        NotificationCompat.Builder notification = new NotificationCompat.Builder(context,"CANAL01")
+        Intent destino= new Intent(context,PedidoActivity.class);
+        destino.putExtra("idPedidoSeleccionado",pedido.getId());
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context,0,destino,PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Notification notification = new NotificationCompat.Builder(context,"CANAL01")
                 //Ver icono
                 .setSmallIcon(R.drawable.ic_launcher_background)
                 .setContentTitle("Tu pedido fue aceptado")
@@ -38,11 +38,12 @@ public class EstadoPedidoReceiver extends BroadcastReceiver {
                         .addLine("El costo será de: $"+pedido.total())
                         .addLine("Previsto el envio para: "+pedido.getFecha().getTime()))
                 .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
+                .setAutoCancel(true)
+                .build();
 
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-        notificationManager.notify(pedido.getId(), notification.build());
+        notificationManager.notify(pedido.getId(), notification);
 
 
     }
