@@ -33,10 +33,10 @@ public class PrepararPedidoService extends IntentService {
             if(p.getEstado().equals(Pedido.Estado.ACEPTADO)) {
                 p.setEstado(Pedido.Estado.EN_PREPARACION);
 
-                //Intent intent = new Intent(getApplicationContext(),EstadoPedidoReceiver.class);
-                intent.setAction(EstadoPedidoReceiver.ESTADO_EN_PREPARACION);
-                intent.putExtra("idPedido",p.getId());
-                getApplicationContext().sendBroadcast(intent);
+                Intent i = new Intent(getApplicationContext(),EstadoPedidoReceiver.class);
+                i.setAction(EstadoPedidoReceiver.ESTADO_EN_PREPARACION);
+                i.putExtra("idPedido",p.getId());
+                getApplicationContext().sendBroadcast(i);
             }
 
         }

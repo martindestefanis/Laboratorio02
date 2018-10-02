@@ -23,28 +23,53 @@ public class EstadoPedidoReceiver extends BroadcastReceiver {
 
         if(intent.getAction().equals(ESTADO_ACEPTADO)){
             Toast.makeText(context,"Pedido para " + pedido.getMailContacto() + " ha cambiado de estado a " + pedido.getEstado() ,Toast.LENGTH_LONG).show();
+            Intent destino= new Intent(context,PedidoActivity.class);
+            destino.putExtra("idPedidoSeleccionado",pedido.getId());
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context,0,destino,PendingIntent.FLAG_UPDATE_CURRENT);
+
+            Notification notification = new NotificationCompat.Builder(context,"CANAL01")
+                    //Ver icono
+                    .setSmallIcon(R.drawable.ic_launcher_background)
+                    .setContentTitle("Tu pedido fue aceptado")
+                    .setStyle(new NotificationCompat.InboxStyle()
+                            .addLine("El costo será de: $"+pedido.total())
+                            .addLine("Previsto el envio para: "+pedido.getFecha()))
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true)
+                    .build();
+
+
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+            notificationManager.notify(pedido.getId(), notification);
+        }
+        if(intent.getAction().equals(ESTADO_EN_PREPARACION)){
+            Intent destino= new Intent(context,HistorialActivity.class);
+            destino.putExtra("idPedidoSeleccionado",pedido.getId());
+            intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context,0,destino,PendingIntent.FLAG_UPDATE_CURRENT);
+
+            Notification notification = new NotificationCompat.Builder(context,"CANAL01")
+                    //Ver icono
+                    .setSmallIcon(R.drawable.ic_launcher_background)
+                    .setContentTitle("Tu pedido esta en preparación")
+                    .setStyle(new NotificationCompat.InboxStyle()
+                            .addLine("El costo será de: $"+pedido.total())
+                            .addLine("Previsto el envio para: "+pedido.getFecha()))
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true)
+                    .build();
+
+
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+            notificationManager.notify(pedido.getId(), notification);
+            Toast.makeText(context,"Pedido para " + pedido.getMailContacto() + " ha cambiado de estado a " + pedido.getEstado() ,Toast.LENGTH_LONG).show();
         }
 
 
-        Intent destino= new Intent(context,PedidoActivity.class);
-        destino.putExtra("idPedidoSeleccionado",pedido.getId());
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context,0,destino,PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Notification notification = new NotificationCompat.Builder(context,"CANAL01")
-                //Ver icono
-                .setSmallIcon(R.drawable.ic_launcher_background)
-                .setContentTitle("Tu pedido fue aceptado")
-                .setStyle(new NotificationCompat.InboxStyle()
-                        .addLine("El costo será de: $"+pedido.total())
-                        .addLine("Previsto el envio para: "+pedido.getFecha().getTime()))
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true)
-                .build();
 
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-        notificationManager.notify(pedido.getId(), notification);
+
 
 
     }
