@@ -15,6 +15,7 @@ import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
 
 public class EstadoPedidoReceiver extends BroadcastReceiver {
     public static final String ESTADO_ACEPTADO="ar.edu.utn.frsf.dam.isi.laboratorio02.ESTADO_ACEPTADO";
+    public static final String ESTADO_EN_PREPARACION="ar.edu.utn.frsf.dam.isi.laboratorio02.ESTADO_EN_PREPARACION";
     @Override
     public void onReceive(Context context, Intent intent) {
         PedidoRepository pedidoRepository = new PedidoRepository();
