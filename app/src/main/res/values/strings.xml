@@ -28,6 +28,8 @@
     <string name="lblEstado">Estado:</string>
     <string name="btnCancelar">CANCELAR</string>
     <string name="btnVerDetalle">VER DETALLE</string>
+    <string name="channelName">Notificaciones lab3</string>
+    <string name="channelDescription">Este es el canal definido en el lab3</string>
 
 
 </resources>

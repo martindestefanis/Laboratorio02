@@ -1,9 +1,14 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
 import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -52,6 +57,9 @@ public class PedidoActivity extends AppCompatActivity{
         edtPedidoDireccion = (EditText) findViewById(R.id.edtPedidoDireccion);
         edtPedidoCorreo = (EditText) findViewById(R.id.edtPedidoCorreo);
         edtPedidoHoraEntrega = (EditText) findViewById(R.id.edtPedidoHoraEntrega);
+        btnPedidoAddProducto = (Button) findViewById(R.id.btnPedidoAddProducto);
+        btnPedidoHacerPedido = (Button) findViewById(R.id.btnPedidoHacerPedido);
+        lstPedidoItems = (ListView) findViewById(R.id.lstPedidoItems);
         repositorioPedido = new PedidoRepository();
 
         Intent i1 = getIntent();
@@ -70,10 +78,24 @@ public class PedidoActivity extends AppCompatActivity{
             if(rbRetira.isChecked()) {
                 edtPedidoDireccion.setEnabled(false);
             }
-        }
-        else {
+           adapterLstPedidoItems = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_single_choice, unPedido.getDetalle());
+           lstPedidoItems.setAdapter(adapterLstPedidoItems);
+
+            edtPedidoCorreo.setEnabled(false);
+            edtPedidoDireccion.setEnabled(false);
+            edtPedidoHoraEntrega.setEnabled(false);
+            rbEnviar.setEnabled(false);
+            rbRetira.setEnabled(false);
+            btnPedidoAddProducto.setEnabled(false);
+            btnPedidoHacerPedido.setEnabled(false);
+            lstPedidoItems.setChoiceMode(ListView.CHOICE_MODE_NONE);
+            lstPedidoItems.setEnabled(false);
+        } else {
             unPedido = new Pedido();
+            adapterLstPedidoItems = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_single_choice, unPedido.getDetalle());
+            lstPedidoItems.setAdapter(adapterLstPedidoItems);
         }
+
 
         rbRetira.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,13 +110,8 @@ public class PedidoActivity extends AppCompatActivity{
             }
         });
 
-        unPedido = new Pedido();
-        lstPedidoItems = (ListView) findViewById(R.id.lstPedidoItems);
-        adapterLstPedidoItems = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_single_choice, unPedido.getDetalle());
-        lstPedidoItems.setAdapter(adapterLstPedidoItems);
         lblTotalPedido = (TextView) findViewById(R.id.lblTotalPedido);
 
-        btnPedidoAddProducto = (Button) findViewById(R.id.btnPedidoAddProducto);
         btnPedidoAddProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,7 +121,6 @@ public class PedidoActivity extends AppCompatActivity{
             }
         });
 
-        btnPedidoHacerPedido = (Button) findViewById(R.id.btnPedidoHacerPedido);
         btnPedidoHacerPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,16 +181,23 @@ public class PedidoActivity extends AppCompatActivity{
                 Runnable r = new Runnable() {
                     @Override
                     public void run() {
-                        try { Thread.currentThread().sleep(10000);
+                        try { Thread.currentThread().sleep(5000);
                         }
                         catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        // buscar pedidos no aceptados y aceptarlos utomáticamente
+
                         List<Pedido> lista = repositorioPedido.getLista();
                         for(Pedido p:lista){
-                            if(p.getEstado().equals(Pedido.Estado.REALIZADO))
+                            if(p.getEstado().equals(Pedido.Estado.REALIZADO)) {
                                 p.setEstado(Pedido.Estado.ACEPTADO);
+
+                                Intent intent = new Intent(getApplicationContext(),EstadoPedidoReceiver.class);
+                                intent.setAction(EstadoPedidoReceiver.ESTADO_ACEPTADO);
+                                intent.putExtra("idPedido",p.getId());
+                                getApplicationContext().sendBroadcast(intent);
+                            }
+
                         }
                         runOnUiThread(new Runnable() {
                             @Override
