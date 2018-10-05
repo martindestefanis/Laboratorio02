@@ -1,3 +1,35 @@
 <resources>
     <string name="app_name">Laboratorio02</string>
+    <string name="main_titulo">Menu de opciones</string>
+    <string name="tvCategoria">Seleccione una categoria</string>
+    <string name="tvListaProd">Lista de productos</string>
+    <string name="tvCantidad">Cantidad a pedir</string>
+    <string name="edtProdCantidad">0</string>
+    <string name="btnProdAddPedido">Agregar</string>
+    <string name="lblTitulo">Datos del pedido</string>
+    <string name="lblCorreo">Correo electrónico</string>
+    <string name="tvModoEntrega">Modo de entrega</string>
+    <string name="optPedidoRetira">Retira en local</string>
+    <string name="optPedidoEnviar">Enviar a domicilio</string>
+    <string name="pedido_lbl_direccion">Dirección de envio</string>
+    <string name="pedido_label_hora_entrega">Hora solicitada(hh:mm)</string>
+    <string name="btnPedidoAddProducto">AGREGAR PRODUCTO</string>
+    <string name="lblTotalPedido">Total del pedido:</string>
+    <string name="btnPedidoQuitarProducto">QUITAR PRODUCTO</string>
+    <string name="btnPedidoHacerPedido">HACER PEDIDO</string>
+    <string name="btnPedidoVolver">VOLVER</string>
+    <string name="tvPedidosRealizados">Pedidos Realizados</string>
+    <string name="btnHistorialNuevo">NUEVO</string>
+    <string name="btnHistorialMenu">MENU</string>
+    <string name="lblEmail">Contacto:</string>
+    <string name="lblFechaEntrega">Feha de entrega:</string>
+    <string name="lblItems">Items:</string>
+    <string name="lblAPagar">A Pagar:</string>
+    <string name="lblEstado">Estado:</string>
+    <string name="btnCancelar">CANCELAR</string>
+    <string name="btnVerDetalle">VER DETALLE</string>
+    <string name="channelName">Notificaciones lab3</string>
+    <string name="channelDescription">Este es el canal definido en el lab3</string>
+
+
 </resources>

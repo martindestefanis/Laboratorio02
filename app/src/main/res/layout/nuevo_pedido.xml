@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/lblTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lblTitulo" />
+
+    <TextView
+        android:id="@+id/lblCorreo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lblCorreo" />
+
+    <EditText
+        android:id="@+id/edtPedidoCorreo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textEmailAddress" />
+
+    <TextView
+        android:id="@+id/tvModoEntrega"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tvModoEntrega" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rbRetira"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/optPedidoRetira" />
+
+        <RadioButton
+            android:id="@+id/rbEnviar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/optPedidoEnviar" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/pedido_lbl_direccion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pedido_lbl_direccion" />
+
+    <EditText
+        android:id="@+id/edtPedidoDireccion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPostalAddress" />
+
+    <TextView
+        android:id="@+id/pedido_label_hora_"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/pedido_label_hora_entrega" />
+
+    <EditText
+        android:id="@+id/edtPedidoHoraEntrega"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="time" />
+
+    <ListView
+        android:id="@+id/lstPedidoItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnPedidoAddProducto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/btnPedidoAddProducto" />
+
+        <Button
+            android:id="@+id/btnPedidoQuitarProducto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/btnPedidoQuitarProducto" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/lblTotalPedido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lblTotalPedido" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnPedidoHacerPedido"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/btnPedidoHacerPedido" />
+
+        <Button
+            android:id="@+id/btnPedidoVolver"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/btnPedidoVolver" />
+    </LinearLayout>
+
+</LinearLayout>
