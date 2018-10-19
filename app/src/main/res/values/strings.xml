@@ -30,6 +30,12 @@
     <string name="btnVerDetalle">VER DETALLE</string>
     <string name="channelName">Notificaciones lab3</string>
     <string name="channelDescription">Este es el canal definido en el lab3</string>
+    <string name="cbPreference1">Retirar por defecto</string>
+    <string name="cbsummary1">El pedido es para retirar</string>
+    <string name="edtPreference1">Correo Electronico</string>
+    <string name="edtsummary1">Se usará por defecto</string>
+    <string name="btnConfiguracion">Configuracion</string>
+
 
 
 </resources>

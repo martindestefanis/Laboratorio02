@@ -11,7 +11,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnNuevoPedido, btnHistorial, btnListaProductos, btnPrepararPedidos;
+    private Button btnNuevoPedido, btnHistorial, btnListaProductos, btnPrepararPedidos, btnConfiguracion;
     ;
     private void createNotificationChannel() {
         // Crear el canal de notificaciones pero solo para API 26 io superior
@@ -73,5 +73,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+
+        btnConfiguracion = (Button) findViewById(R.id.btnConfiguracion);
+        btnConfiguracion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ConfiguracionActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
