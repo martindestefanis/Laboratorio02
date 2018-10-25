@@ -35,6 +35,11 @@
     <string name="edtPreference1">Correo Electronico</string>
     <string name="edtsummary1">Se usará por defecto</string>
     <string name="btnConfiguracion">Configuracion</string>
+    <string name="btnCategorias">Categorias</string>
+    <string name="tvNombreategoria">Nombre de la categoria</string>
+    <string name="btnCrearCategoria">Guardar</string>
+    <string name="btnCategoriaVolver">VOLVER</string>
+
 
 
 
