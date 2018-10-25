@@ -38,7 +38,7 @@ public class CategoriaActivity extends AppCompatActivity {
                                     Toast.makeText(CategoriaActivity.this, "La categoria ha sido creada", Toast.LENGTH_LONG).show();
                                 }
                             });
-                            textoCat.setText("");
+
                         } catch (IllegalStateException e) {
                             runOnUiThread(new Runnable() {
                                 @Override
@@ -51,6 +51,7 @@ public class CategoriaActivity extends AppCompatActivity {
                     }
                 };
                 unHilo.start();
+                textoCat.setText("");
             }
         });
         btnMenu = (Button) findViewById(R.id.btnCategoriaVolver);
