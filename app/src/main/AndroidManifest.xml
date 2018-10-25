@@ -2,12 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="ar.edu.utn.frsf.dam.isi.laboratorio02">
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:usesCleartextTraffic="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
@@ -30,6 +34,9 @@
         <activity
             android:name=".ConfiguracionActivity"
             android:windowSoftInputMode="stateHidden" />
+
+        <activity android:name=".CategoriaActivity"
+            android:windowSoftInputMode="stateHidden"/>
 
         <receiver
             android:name=".EstadoPedidoReceiver"
@@ -63,6 +70,11 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
+        <activity
+            android:name=".CategoriaActivity"
+            android:windowSoftInputMode="stateHidden" />
     </application>
+
+
 
 </manifest>
