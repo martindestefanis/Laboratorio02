@@ -91,8 +91,8 @@ public class PedidoActivity extends AppCompatActivity{
             if(rbRetira.isChecked()) {
                 edtPedidoDireccion.setEnabled(false);
             }
-           adapterLstPedidoItems = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_single_choice, unPedido.getDetalle());
-           lstPedidoItems.setAdapter(adapterLstPedidoItems);
+            adapterLstPedidoItems = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_single_choice, unPedido.getDetalle());
+            lstPedidoItems.setAdapter(adapterLstPedidoItems);
 
             edtPedidoCorreo.setEnabled(false);
             edtPedidoDireccion.setEnabled(false);
