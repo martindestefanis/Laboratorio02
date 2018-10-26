@@ -15,6 +15,8 @@ import android.widget.Spinner;
 
 import org.json.JSONException;
 
+import java.util.ArrayList;
+
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
@@ -37,11 +39,11 @@ public class ListaProdActivity extends AppCompatActivity {
 
         productoRepository = new ProductoRepository();
         spinner = (Spinner) findViewById(R.id.spinner);
-        lstProductos = (ListView) findViewById(R.id.lstProductos);
+       lstProductos = (ListView) findViewById(R.id.lstProductos);
         edtProdCantidad = (EditText) findViewById(R.id.edtProdCantidad);
         btnProdAddPedido = (Button) findViewById(R.id.btnProdAddPedido);
 
-        /*adapterCategoria = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, productoRepository.getCategorias());
+      /*  adapterCategoria = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, productoRepository.getCategorias());
         spinner.setAdapter(adapterCategoria);
         Bundle extras=getIntent().getExtras();
         if(extras!=null) {
@@ -94,19 +96,13 @@ public class ListaProdActivity extends AppCompatActivity {
 
         Runnable r = new Runnable() {
             @Override
-            public void run() {
-                CategoriaRest catRest = new CategoriaRest();
-                Categoria[] cats = new Categoria[0];
-                try {
-                    cats = catRest.listarTodas().toArray(new Categoria[0]);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                final Categoria[] finalCats = cats;
+            public void run(){
                 runOnUiThread(new Runnable() {
+                    CategoriaRest catRest = new CategoriaRest();
+                    Categoria[] cats = catRest.listarTodas().toArray(new Categoria[0]);
                     @Override
                     public void run() {
-                        adapterCategoria = new ArrayAdapter<>(ListaProdActivity.this, android.R.layout.simple_spinner_dropdown_item, finalCats);
+                        adapterCategoria = new ArrayAdapter<Categoria>(ListaProdActivity.this, android.R.layout.simple_spinner_dropdown_item, cats);
                         spinner.setAdapter(adapterCategoria);
                         spinner.setSelection(0);
                         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -121,7 +117,8 @@ public class ListaProdActivity extends AppCompatActivity {
                             public void onNothingSelected(AdapterView<?> adapterView) {}
                         });
 
-                        adapterLstProductos = new ArrayAdapter<>(ListaProdActivity.this, android.R.layout.simple_list_item_single_choice, productoRepository.buscarPorCategoria((Categoria)spinner.getItemAtPosition(0)));
+                        adapterLstProductos = new ArrayAdapter<>(ListaProdActivity.this, android.R.layout.simple_list_item_single_choice,productoRepository.buscarPorCategoria((Categoria)spinner.getItemAtPosition(0))) ;
+                        lstProductos = (ListView) findViewById(R.id.lstProductos);
                         lstProductos.setAdapter(adapterLstProductos);
                     }
                 });

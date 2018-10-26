@@ -83,7 +83,7 @@ public class CategoriaRest {
     }
 
     // definir el método
-    public List<Categoria> listarTodas() throws JSONException {
+    public List<Categoria> listarTodas() {
         // inicializar variables
         List<Categoria> resultado = new ArrayList<>();
         HttpURLConnection urlConnection = null;
@@ -133,8 +133,9 @@ public class CategoriaRest {
                 in.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } finally {
             if (urlConnection != null)
                 urlConnection.disconnect();
         }
