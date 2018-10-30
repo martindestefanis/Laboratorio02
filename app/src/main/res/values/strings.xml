@@ -36,11 +36,19 @@
     <string name="edtsummary1">Se usará por defecto</string>
     <string name="btnConfiguracion">Configuracion</string>
     <string name="btnCategorias">Categorias</string>
-    <string name="tvNombreategoria">Nombre de la categoria</string>
+    <string name="tvNombreCategoria">Nombre de la categoria</string>
     <string name="btnCrearCategoria">Guardar</string>
     <string name="btnCategoriaVolver">VOLVER</string>
-
-
-
-
+    <string name="abmProductoAltaNuevoON">Buscar por ID y actualizar</string>
+    <string name="abmProductoAltaNuevoOFF">Crear producto nuevo</string>
+    <string name="btnAbmProductoBuscar">Buscar por ID...</string>
+    <string name="tvDatosProducto">Datos del producto</string>
+    <string name="tvNombre">Nombre</string>
+    <string name="tvDescripcion">Descripcion</string>
+    <string name="tvPrecio">Precio</string>
+    <string name="tvBuscarPorID">Buscar producto por id</string>
+    <string name="tvCategoriaGestion">Categoria</string>
+    <string name="btnAbmProductoCrear">Guardar</string>
+    <string name="btnAbmProductoBorrar">Borrar</string>
+    <string name="btnAbmProductoVolver">VOLVER</string>
 </resources>
