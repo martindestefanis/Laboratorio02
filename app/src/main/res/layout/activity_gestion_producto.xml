@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".GestionProductoActivity">
+
+    <LinearLayout
+        android:id="@+id/lyToggleButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvBuscarPorID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tvBuscarPorID" />
+
+    <EditText
+        android:id="@+id/abmProductoIdBuscar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tvDatosProducto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tvDatosProducto" />
+
+    <Button
+        android:id="@+id/btnAbmProductoBuscar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btnAbmProductoBuscar" />
+
+    <TextView
+        android:id="@+id/tvNombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tvNombre" />
+
+    <EditText
+        android:id="@+id/abmProductoNombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tvDescripcion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tvDescripcion" />
+
+    <EditText
+        android:id="@+id/abmProductoDescripcion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tvPrecio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tvPrecio" />
+
+    <EditText
+        android:id="@+id/abmProductoPrecio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tvCategoria"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tvCategoriaGestion" />
+
+    <Spinner
+        android:id="@+id/abmProductoCategoria"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btnAbmProductoCrear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btnAbmProductoCrear" />
+
+    <Button
+        android:id="@+id/btnAbmProductoBorrar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btnAbmProductoBorrar" />
+
+    <Button
+        android:id="@+id/btnAbmProductoVolver"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btnCategoriaVolver" />
+</LinearLayout>
