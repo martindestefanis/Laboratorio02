@@ -38,6 +38,12 @@
             android:name=".CategoriaActivity"
             android:windowSoftInputMode="stateHidden" />
 
+        <activity
+            android:name=".GestionProductoActivity"
+            android:windowSoftInputMode="stateHidden" />
+
+
+
         <receiver
             android:name=".EstadoPedidoReceiver"
             android:enabled="true"
@@ -71,10 +77,7 @@
             </intent-filter>
         </service>
 
-        <activity
-            android:name=".CategoriaActivity"
-            android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".GestionProductoActivity"></activity>
+
     </application>
 
 </manifest>

@@ -35,7 +35,7 @@ public class CategoriaRest {
         }
         //Abrir una conexión al servidor para enviar el POST
         try {
-            URL url = new URL("http://10.0.2.2:5000/categorias/");
+            URL url = new URL("http://192.168.0.111:5000/categorias/");
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setChunkedStreamingMode(0);
             urlConnection.setRequestProperty("Content-Type", "application/json");
@@ -90,7 +90,7 @@ public class CategoriaRest {
         // GESTIONAR LA CONEXION
         URL url = null;
         try {
-            url = new URL("http://10.0.2.2:5000/categorias/");
+            url = new URL("http://192.168.0.111:5000/categorias/");
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestProperty("Accept-Type", "application/json");
             urlConnection.setRequestMethod("GET");
@@ -116,7 +116,7 @@ public class CategoriaRest {
                 for (int i = 0; i < listaCategorias.length(); i++){
                     JSONObject object = listaCategorias.getJSONObject(i);
                     Categoria cat = new Categoria();
-                    cat.setNombre(object.getString("Nombre"));
+                    cat.setNombre(object.getString("nombre"));
                     cat.setId(object.getInt("id"));
                     // analizar cada element del JSONArray
                     // armar una instancia de categoría y agregarla a la lista
@@ -134,7 +134,11 @@ public class CategoriaRest {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
-        } finally {
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
             if (urlConnection != null)
                 urlConnection.disconnect();
         }
