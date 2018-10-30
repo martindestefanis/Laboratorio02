@@ -35,7 +35,7 @@ public class CategoriaRest {
         }
         //Abrir una conexión al servidor para enviar el POST
         try {
-            URL url = new URL("http://192.168.0.111:5000/categorias/");
+            URL url = new URL("http://192.168.0.5:5000/categorias/");
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setChunkedStreamingMode(0);
             urlConnection.setRequestProperty("Content-Type", "application/json");
@@ -90,7 +90,7 @@ public class CategoriaRest {
         // GESTIONAR LA CONEXION
         URL url = null;
         try {
-            url = new URL("http://192.168.0.111:5000/categorias/");
+            url = new URL("http://192.168.0.5:5000/categorias/");
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestProperty("Accept-Type", "application/json");
             urlConnection.setRequestMethod("GET");

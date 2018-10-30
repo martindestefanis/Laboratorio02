@@ -11,7 +11,9 @@
         android:id="@+id/lyToggleButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"></LinearLayout>
+        android:orientation="horizontal">
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tvBuscarPorID"

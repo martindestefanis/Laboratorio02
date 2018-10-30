@@ -96,7 +96,6 @@ public class GestionProductoActivity extends AppCompatActivity {
         LinearLayout layoutToggle = (LinearLayout)findViewById(R.id.lyToggleButton);
         layoutToggle.addView(opcionNuevoBusqueda);
 
-
         btnBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,8 +124,10 @@ public class GestionProductoActivity extends AppCompatActivity {
                             Toast.makeText(GestionProductoActivity.this, "Error al buscar un producto. Código de error: " + resp.code(), Toast.LENGTH_SHORT).show();
                         }
                     }
+
                     @Override
                     public void onFailure(Call<Producto> call, Throwable t) {
+                        Toast.makeText(GestionProductoActivity.this, "Error al actualizar producto. Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -161,8 +162,10 @@ public class GestionProductoActivity extends AppCompatActivity {
                                 break;
                         }
                     }
+
                     @Override
                     public void onFailure(Call<Producto> call, Throwable t) {
+                        Toast.makeText(GestionProductoActivity.this, "Error al actualizar producto. Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -179,23 +182,7 @@ public class GestionProductoActivity extends AppCompatActivity {
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(nombreProducto.getText().toString().isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Debe ingresar un nombre", Toast.LENGTH_LONG);
-                    return;
-                }
-                if (descProducto.getText().toString().isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Debe ingresar una descripción", Toast.LENGTH_LONG);
-                    return;
-                }
-                if (precioProducto.getText().toString().isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Debe ingresar un precio", Toast.LENGTH_LONG);
-                    return;
-                }
-                if (!comboCategorias.isSelected()){
-                    Toast.makeText(getApplicationContext(), "Debe seleccionar una categoría", Toast.LENGTH_LONG);
-                    return;
-                }
-                if(flagActualizacion) {
+                    if(flagActualizacion) {
                     int id = Integer.parseInt(idProductoBuscar.getText().toString());
                     Double precio = Double.parseDouble(precioProducto.getText().toString());
                     Producto p = new Producto(nombreProducto.getText().toString(), descProducto.getText().toString(), precio, (Categoria) comboCategorias.getSelectedItem());
@@ -223,6 +210,7 @@ public class GestionProductoActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<Producto> call, Throwable t) {
+                            Toast.makeText(GestionProductoActivity.this, "Error al actualizar producto. Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

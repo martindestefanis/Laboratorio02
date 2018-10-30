@@ -117,7 +117,7 @@ public class ListaProdActivity extends AppCompatActivity {
                             public void onNothingSelected(AdapterView<?> adapterView) {}
                         });
 
-                        adapterLstProductos = new ArrayAdapter<>(ListaProdActivity.this, android.R.layout.simple_list_item_single_choice,productoRepository.buscarPorCategoria((Categoria)spinner.getItemAtPosition(0))) ;
+                        adapterLstProductos = new ArrayAdapter<>(ListaProdActivity.this, android.R.layout.simple_list_item_single_choice,productoRepository.buscarPorCategoria((Categoria)spinner.getItemAtPosition(0)));
                         lstProductos = (ListView) findViewById(R.id.lstProductos);
                         lstProductos.setAdapter(adapterLstProductos);
                     }
