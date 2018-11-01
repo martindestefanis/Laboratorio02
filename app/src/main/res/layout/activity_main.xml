@@ -36,4 +36,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <Button
+        android:id="@+id/btnConfiguracion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btnConfiguracion" />
+
+    <Button
+        android:id="@+id/btnCategorias"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Categorias" />
+    <Button
+        android:id="@+id/btnProdChange"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="C/M/B Producto" />
 </LinearLayout>

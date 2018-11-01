@@ -5,8 +5,10 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +32,7 @@ import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoDetalle;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.ConfiguracionActivity;
 
 public class PedidoActivity extends AppCompatActivity{
     private Pedido unPedido;
@@ -64,6 +67,16 @@ public class PedidoActivity extends AppCompatActivity{
 
         Intent i1 = getIntent();
         Integer idPedido = 0;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String Email = prefs.getString("edtPreference1","pedronofunciono");
+        Boolean retira = prefs.getBoolean("cbPreference1",false);
+        if(!Email.equals("pedronofunciono")){
+            edtPedidoCorreo.setText(Email);
+        }
+        if(retira.equals(true)){
+            rbRetira.setChecked(true);
+        }
+
         if(i1.getExtras()!=null) {
             idPedido = i1.getExtras().getInt("idPedidoSeleccionado");
         }
@@ -78,8 +91,8 @@ public class PedidoActivity extends AppCompatActivity{
             if(rbRetira.isChecked()) {
                 edtPedidoDireccion.setEnabled(false);
             }
-           adapterLstPedidoItems = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_single_choice, unPedido.getDetalle());
-           lstPedidoItems.setAdapter(adapterLstPedidoItems);
+            adapterLstPedidoItems = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_single_choice, unPedido.getDetalle());
+            lstPedidoItems.setAdapter(adapterLstPedidoItems);
 
             edtPedidoCorreo.setEnabled(false);
             edtPedidoDireccion.setEnabled(false);
