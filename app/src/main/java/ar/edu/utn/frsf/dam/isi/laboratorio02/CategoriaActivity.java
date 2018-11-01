@@ -6,14 +6,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.CategoriaDAO;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.MyDatabase;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
 
 public class CategoriaActivity extends AppCompatActivity {
     private EditText textoCat;
     private Button btnCrear;
     private Button btnMenu;
+    private Button btnVerCategorias;
+    private CategoriaDAO categoriaDAO;
+    private TextView tvResultado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +29,12 @@ public class CategoriaActivity extends AppCompatActivity {
         setContentView(R.layout.categorias);
         textoCat = (EditText) findViewById(R.id.txtNombreCategoria);
         btnCrear = (Button) findViewById(R.id.btnCrearCategoria);
-        btnCrear.setOnClickListener(new View.OnClickListener() {
+        btnVerCategorias = (Button) findViewById(R.id.btnVerCategorias);
+        tvResultado = (TextView) findViewById(R.id.tvResultado);
+
+        categoriaDAO = MyDatabase.getInstance(this).getCategoriaDAO();
+
+        /*btnCrear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final CategoriaRest unaCatRest = new CategoriaRest();
@@ -52,6 +65,35 @@ public class CategoriaActivity extends AppCompatActivity {
                 };
                 unHilo.start();
                 textoCat.setText("");
+            }
+        });*/
+        btnCrear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Categoria unaCat = new Categoria();
+                unaCat.setNombre(textoCat.getText().toString());
+                Thread unHilo = new Thread() {
+                    @Override
+                    public void run(){
+                        categoriaDAO.insert(unaCat);
+                    }
+                };
+                unHilo.start();
+                textoCat.setText("");
+            }
+        });
+        btnVerCategorias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Thread unHilo = new Thread(){
+                    List<Categoria> lista = categoriaDAO.getAll();
+                }
+                unHilo.start();
+                final StringBuilder resultado = new StringBuilder(" === DEPARTAMENTOS ==="+ "\r\n");
+                for (Categoria d : lista) {
+                    resultado.append(d.getId() + ": " + d.getNombre() + "\r\n");
+                }
+                tvResultado.setText(resultado);
             }
         });
         btnMenu = (Button) findViewById(R.id.btnCategoriaVolver);
