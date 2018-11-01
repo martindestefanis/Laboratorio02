@@ -27,6 +27,7 @@ public class CategoriaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.categorias);
+
         textoCat = (EditText) findViewById(R.id.txtNombreCategoria);
         btnCrear = (Button) findViewById(R.id.btnCrearCategoria);
         btnVerCategorias = (Button) findViewById(R.id.btnVerCategorias);
@@ -67,6 +68,7 @@ public class CategoriaActivity extends AppCompatActivity {
                 textoCat.setText("");
             }
         });*/
+
         btnCrear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,36 +77,68 @@ public class CategoriaActivity extends AppCompatActivity {
                 Thread unHilo = new Thread() {
                     @Override
                     public void run(){
-                        categoriaDAO.insert(unaCat);
+                        try {
+                            categoriaDAO.insert(unaCat);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(),"La categoría " + unaCat.getNombre() + " fue creada correctamente",Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                        catch (Exception e){
+                            e.printStackTrace();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), "Error: No se pudo crear la categoría", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
                     }
                 };
                 unHilo.start();
                 textoCat.setText("");
             }
         });
+
         btnVerCategorias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Thread unHilo = new Thread(){
-                    List<Categoria> lista = categoriaDAO.getAll();
-                }
-                unHilo.start();
-                final StringBuilder resultado = new StringBuilder(" === DEPARTAMENTOS ==="+ "\r\n");
-                for (Categoria d : lista) {
-                    resultado.append(d.getId() + ": " + d.getNombre() + "\r\n");
-                }
-                tvResultado.setText(resultado);
+                Runnable r1 = new Runnable() {
+                    @Override
+                    public void run() {
+                        final String resultado = consultaCategorias();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                tvResultado.setText(resultado);
+                            }
+                        });
+                    }
+                };
+                Thread t1 = new Thread(r1);
+                t1.start();
             }
         });
+
         btnMenu = (Button) findViewById(R.id.btnCategoriaVolver);
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(CategoriaActivity.this,
-                        MainActivity.class);
+                Intent i = new Intent(CategoriaActivity.this, MainActivity.class);
                 startActivity(i);
             }
         });
+    }
+
+    private String consultaCategorias(){
+        List<Categoria> lista = categoriaDAO.getAll();
+        final StringBuilder resultado = new StringBuilder(" === DEPARTAMENTOS ==="+ "\r\n");
+        for (Categoria d : lista) {
+            resultado.append(d.getId() + ": " + d.getNombre() + "\r\n");
+        }
+        return resultado.toString();
     }
 }
 

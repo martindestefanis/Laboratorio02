@@ -31,4 +31,12 @@ public class MyDatabase {
     public void setCategoriaDAO(CategoriaDAO categoriaDAO) {
         this.categoriaDAO = categoriaDAO;
     }
+
+    public ProductoDAO getProductoDAO() {
+        return productoDAO;
+    }
+
+    public void setProductoDAO(ProductoDAO productoDAO) {
+        this.productoDAO = productoDAO;
+    }
 }
