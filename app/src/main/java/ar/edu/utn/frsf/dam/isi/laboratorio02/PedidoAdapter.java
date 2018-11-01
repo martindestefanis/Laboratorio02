@@ -100,7 +100,7 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
             public void onClick(View v) {
                 Intent i = new Intent(ctx, PedidoActivity.class);
                 i.putExtra("idPedidoSeleccionado", pedido.getId());
-                Log.d("Database", "idPedidoSeleccionado salida " + pedido.getId().toString());
+                Log.d("EjemploDatabase", "idPedidoSeleccionado salida " + pedido.getId().toString());
                 ctx.startActivity(i);
             }
         });
