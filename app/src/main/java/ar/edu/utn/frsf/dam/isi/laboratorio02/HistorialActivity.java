@@ -32,12 +32,16 @@ public class HistorialActivity extends AppCompatActivity{
             @Override
             public void run() {
                 pedidoAdapter = new PedidoAdapter(HistorialActivity.this, pedidoDAO.getAll());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        lstHistorialPedidos.setAdapter(pedidoAdapter);
+                    }
+                });
             }
         };
         Thread t = new Thread(r);
         t.start();
-
-        lstHistorialPedidos.setAdapter(pedidoAdapter);
 
         btnHistorialNuevo = (Button) findViewById(R.id.btnHistorialNuevo);
         btnhistorialMenu = (Button) findViewById(R.id.btnhistorialMenu);

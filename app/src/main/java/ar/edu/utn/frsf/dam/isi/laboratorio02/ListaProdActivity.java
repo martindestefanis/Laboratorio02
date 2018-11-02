@@ -110,9 +110,9 @@ public class ListaProdActivity extends AppCompatActivity {
             @Override
             public void run(){
                 final List<Categoria> cats = categoriaDAO.getAll();
+                //CategoriaRest catRest = new CategoriaRest();
+                //Categoria[] cats = catRest.listarTodas().toArray(new Categoria[0]);
                 runOnUiThread(new Runnable() {
-                    //CategoriaRest catRest = new CategoriaRest();
-                    //Categoria[] cats = catRest.listarTodas().toArray(new Categoria[0]);
                     @Override
                     public void run() {
                         adapterCategoria = new ArrayAdapter<Categoria>(ListaProdActivity.this, android.R.layout.simple_spinner_dropdown_item, cats);

@@ -60,12 +60,19 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
                     @Override
                     public void onClick(View view) {
                         int indice = (int) view.getTag();
-                        Pedido pedidoSeleccionado = datos.get(indice);
+                        final Pedido pedidoSeleccionado = datos.get(indice);
                         if( pedidoSeleccionado.getEstado().equals(Pedido.Estado.REALIZADO) ||
                                 pedidoSeleccionado.getEstado().equals(Pedido.Estado.ACEPTADO) ||
                                 pedidoSeleccionado.getEstado().equals(Pedido.Estado.EN_PREPARACION)) {
                             pedidoSeleccionado.setEstado(Pedido.Estado.CANCELADO);
-                            pedidoDAO.update(pedidoSeleccionado);
+                            Runnable r = new Runnable() {
+                                @Override
+                                public void run() {
+                                    pedidoDAO.update(pedidoSeleccionado);
+                                }
+                            };
+                            Thread t = new Thread(r);
+                            t.start();
                             PedidoAdapter.this.notifyDataSetChanged();
                             return;
                         }

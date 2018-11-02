@@ -9,6 +9,7 @@ import android.arch.persistence.room.Update;
 import java.util.List;
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoConDetalles;
 
 @Dao
 public interface PedidoDAO {
@@ -17,6 +18,9 @@ public interface PedidoDAO {
 
     @Query("SELECT * FROM Pedido WHERE ID_PEDIDO = :PedID")
     Pedido buscarPorID(Integer PedID);
+
+    @Query("SELECT * FROM Pedido WHERE ID_PEDIDO = :PedID")
+    PedidoConDetalles buscarPorIDConDetalle(Integer PedID);
 
     @Insert
     long insert(Pedido pedido);
