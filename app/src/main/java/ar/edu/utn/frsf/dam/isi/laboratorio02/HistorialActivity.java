@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.MyDatabase;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoDAO;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
 
 public class HistorialActivity extends AppCompatActivity{
@@ -14,6 +16,7 @@ public class HistorialActivity extends AppCompatActivity{
     private Button btnHistorialNuevo, btnhistorialMenu;
     private ListView lstHistorialPedidos;
     PedidoAdapter pedidoAdapter;
+    PedidoDAO pedidoDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +24,19 @@ public class HistorialActivity extends AppCompatActivity{
         setContentView(R.layout.historial_pedidos);
 
         lstHistorialPedidos = (ListView) findViewById(R.id.lstHistorialPedidos);
-        PedidoRepository pedidoRepository = new PedidoRepository();
-        pedidoAdapter = new PedidoAdapter(HistorialActivity.this,pedidoRepository.getLista());
+        //PedidoRepository pedidoRepository = new PedidoRepository();
+        //pedidoAdapter = new PedidoAdapter(HistorialActivity.this,pedidoRepository.getLista());
+        pedidoDAO = MyDatabase.getInstance(this).getPedidoDAO();
+
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                pedidoAdapter = new PedidoAdapter(HistorialActivity.this, pedidoDAO.getAll());
+            }
+        };
+        Thread t = new Thread(r);
+        t.start();
+
         lstHistorialPedidos.setAdapter(pedidoAdapter);
 
         btnHistorialNuevo = (Button) findViewById(R.id.btnHistorialNuevo);

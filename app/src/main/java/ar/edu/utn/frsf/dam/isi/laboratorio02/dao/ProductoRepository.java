@@ -12,7 +12,7 @@ import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
 
 public class ProductoRepository {
 
-    private static List<Producto> LISTA_PRODUCTOS = new ArrayList<>();
+    /*private static List<Producto> LISTA_PRODUCTOS = new ArrayList<>();
     private static List<Categoria> CATEGORIAS_PRODUCTOS = new ArrayList<>();
     private static boolean FLAG_INICIALIZADO = false;
 
@@ -56,5 +56,5 @@ public class ProductoRepository {
             if(p.getCategoria().getId().equals(cat.getId())) resultado.add(p);
         }
         return resultado;
-    }
+    }*/
 }

@@ -12,12 +12,15 @@ import android.widget.ArrayAdapter;
 import android.view.View;
 import java.util.List;
 
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.MyDatabase;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoDAO;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
 
 public class PedidoAdapter extends ArrayAdapter<Pedido> {
     private Context ctx;
     private List<Pedido> datos;
     private PedidoHolder pedidoHolder;
+    private PedidoDAO pedidoDAO;
 
     public PedidoAdapter(Context context,List<Pedido> objects) {
         super(context, 0, objects);
@@ -28,6 +31,7 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        pedidoDAO = MyDatabase.getInstance(this.ctx).getPedidoDAO();
         LayoutInflater inflater = LayoutInflater.from(this.ctx);
         View fila_historial = convertView;
         if (fila_historial == null) {
@@ -61,6 +65,7 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
                                 pedidoSeleccionado.getEstado().equals(Pedido.Estado.ACEPTADO) ||
                                 pedidoSeleccionado.getEstado().equals(Pedido.Estado.EN_PREPARACION)) {
                             pedidoSeleccionado.setEstado(Pedido.Estado.CANCELADO);
+                            pedidoDAO.update(pedidoSeleccionado);
                             PedidoAdapter.this.notifyDataSetChanged();
                             return;
                         }

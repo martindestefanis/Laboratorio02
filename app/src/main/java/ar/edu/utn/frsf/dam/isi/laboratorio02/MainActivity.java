@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btnPrepararPedidos= (Button)findViewById(R.id.btnPrepararPedidos);
-
         btnPrepararPedidos.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
