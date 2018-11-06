@@ -120,6 +120,11 @@ public class PedidoActivity extends AppCompatActivity{
                             btnPedidoAddProducto.setEnabled(false);
                             btnPedidoHacerPedido.setEnabled(false);
                             lstPedidoItems.setChoiceMode(ListView.CHOICE_MODE_NONE);
+                            Double total = 0.0;
+                            for (PedidoDetalle pd : unPedidoConDetalles.detalle){
+                                total = total + pd.getProducto().getPrecio()*pd.getCantidad();
+                            }
+                            lblTotalPedido.setText("Total del pedido: $" + total);
                             //lstPedidoItems.setEnabled(false);
                         }
                     });
@@ -214,19 +219,20 @@ public class PedidoActivity extends AppCompatActivity{
                 //repositorioPedido.guardarPedido(unPedido);
                 //unPedido = new Pedido();
 
-                unPedidoDetalle.setPedido(unPedido);
-
                 Runnable r = new Runnable() {
                     @Override
                     public void run() {
-                        pedidoDetalleDAO.insert(unPedidoDetalle);
-                        pedidoDAO.insert(unPedido);
+                        long idPedido = pedidoDAO.insert(unPedido);
+                        Pedido pedido = pedidoDAO.buscarPorID(idPedido);
+                        for (PedidoDetalle pd : unPedido.getDetalle()){
+                            pd.setPedido(pedido);
+                            pedidoDetalleDAO.insert(pd);
+                        }
                         try { Thread.currentThread().sleep(5000);
                         }
                         catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-
                         List<Pedido> lista = pedidoDAO.getAll();
                         for(Pedido p:lista){
                             if(p.getEstado().equals(Pedido.Estado.REALIZADO)) {

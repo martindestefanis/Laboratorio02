@@ -17,7 +17,7 @@ public interface PedidoDAO {
     List<Pedido> getAll();
 
     @Query("SELECT * FROM Pedido WHERE ID_PEDIDO = :PedID")
-    Pedido buscarPorID(Integer PedID);
+    Pedido buscarPorID(long PedID);
 
     @Query("SELECT * FROM Pedido WHERE ID_PEDIDO = :PedID")
     PedidoConDetalles buscarPorIDConDetalle(Integer PedID);

@@ -59,4 +59,8 @@ public class MyDatabase {
     public void setPedidoDetalleDAO(PedidoDetalleDAO pedidoDetalleDAO) {
         this.pedidoDetalleDAO = pedidoDetalleDAO;
     }
+
+    public void borrarTodo(){
+        this.db.clearAllTables();
+    }
 }

@@ -19,6 +19,9 @@ public interface PedidoDetalleDAO {
     @Query("SELECT * FROM PedidoDetalle WHERE ID_PEDIDO_DETALLE = :PedDetID")
     PedidoDetalle buscarPorID(Integer PedDetID);
 
+    @Query("SELECT * FROM PedidoDetalle WHERE ped_ID_PEDIDO = :PedID")
+    List<PedidoDetalle> buscarPorIDPedido(Integer PedID);
+
     @Insert
     long insert(PedidoDetalle pedidoDetalle);
 

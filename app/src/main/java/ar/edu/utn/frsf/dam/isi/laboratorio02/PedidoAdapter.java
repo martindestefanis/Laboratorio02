@@ -14,13 +14,16 @@ import java.util.List;
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.MyDatabase;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoDAO;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoDetalleDAO;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoDetalle;
 
 public class PedidoAdapter extends ArrayAdapter<Pedido> {
     private Context ctx;
     private List<Pedido> datos;
     private PedidoHolder pedidoHolder;
     private PedidoDAO pedidoDAO;
+    private PedidoDetalleDAO pedidoDetalleDAO;
 
     public PedidoAdapter(Context context,List<Pedido> objects) {
         super(context, 0, objects);
@@ -32,6 +35,7 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         pedidoDAO = MyDatabase.getInstance(this.ctx).getPedidoDAO();
+        pedidoDetalleDAO = MyDatabase.getInstance(this.ctx).getPedidoDetalleDAO();
         LayoutInflater inflater = LayoutInflater.from(this.ctx);
         View fila_historial = convertView;
         if (fila_historial == null) {
@@ -43,17 +47,35 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
             fila_historial.setTag(pedidoHolder);
         }
         final Pedido pedido = (Pedido) super.getItem(position);
-        pedidoHolder.tvMailPedido.setText("Contacto: " + pedido.getMailContacto());
-        pedidoHolder.tvHoraEntrega.setText("Fecha de entrega: " + pedido.getFecha().toString());
-        pedidoHolder.tvPrecio.setText("A pagar: $" + pedido.total().toString());
-        pedidoHolder.tvCantidadItems.setText("Items: " + pedido.getDetalle().size());
-        pedidoHolder.estado.setText("Estado: " + pedido.getEstado().toString());
-        if (pedido.getRetirar()) {
-            pedidoHolder.tipoEntrega.setImageResource(R.drawable.retira);
-        }
-        else {
-            pedidoHolder.tipoEntrega.setImageResource(R.drawable.envio);
-        }
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                final List<PedidoDetalle> listaPedDet = pedidoDetalleDAO.buscarPorIDPedido(pedido.getId());
+                pedidoHolder.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Double total = 0.0;
+                        for (PedidoDetalle pd : listaPedDet){
+                            total = total + pd.getProducto().getPrecio()*pd.getCantidad();
+                        }
+                        pedidoHolder.tvMailPedido.setText("Contacto: " + pedido.getMailContacto());
+                        pedidoHolder.tvHoraEntrega.setText("Fecha de entrega: " + pedido.getFecha().toString());
+                        pedidoHolder.tvPrecio.setText("A pagar: $" + total.toString());
+                        pedidoHolder.tvCantidadItems.setText("Items: " + listaPedDet.size());
+                        pedidoHolder.estado.setText("Estado: " + pedido.getEstado().toString());
+                        if (pedido.getRetirar()) {
+                            pedidoHolder.tipoEntrega.setImageResource(R.drawable.retira);
+                        }
+                        else {
+                            pedidoHolder.tipoEntrega.setImageResource(R.drawable.envio);
+                        }
+                    }
+                });
+            }
+
+        };
+        Thread t = new Thread(r);
+        t.start();
 
         pedidoHolder.btnCancelar.setOnClickListener(
                 new View.OnClickListener() {

@@ -52,4 +52,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="C/M/B Producto" />
+
+    <Button
+        android:id="@+id/btnBorrarTodo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="BORRAR TODO" />
 </LinearLayout>
