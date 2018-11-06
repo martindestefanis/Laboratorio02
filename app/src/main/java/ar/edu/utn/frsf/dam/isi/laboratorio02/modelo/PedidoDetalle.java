@@ -8,8 +8,8 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity
 public class PedidoDetalle {
 
-    private static int ID_DETALLE =1;
-    @PrimaryKey
+    //private static int ID_DETALLE =1;
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "ID_PEDIDO_DETALLE")
     private Integer id;
     private Integer cantidad;
@@ -19,7 +19,7 @@ public class PedidoDetalle {
     private Pedido pedido;
 
     public PedidoDetalle(Integer cantidad, Producto producto) {
-        id=ID_DETALLE++;
+        //id=ID_DETALLE++;
         this.cantidad = cantidad;
         this.producto = producto;
     }
