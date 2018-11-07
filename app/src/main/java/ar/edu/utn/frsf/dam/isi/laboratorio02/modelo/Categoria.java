@@ -1,9 +1,17 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02.modelo;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+
 import java.util.Objects;
 
+@Entity
 public class Categoria {
 
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "ID_CATEGORIA")
     private Integer id;
     private String nombre;
 

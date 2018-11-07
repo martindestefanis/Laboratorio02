@@ -7,7 +7,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestClient {
-    private static RestClient _INSTANCIA_UNICA=null;
+    /*private static RestClient _INSTANCIA_UNICA=null;
     private Retrofit retrofit;
     public static RestClient getInstance(){
         if(_INSTANCIA_UNICA==null) _INSTANCIA_UNICA = new
@@ -28,5 +28,5 @@ public class RestClient {
     }
     public void setRetrofit(Retrofit retrofit) {
         this.retrofit = retrofit;
-    }
+    }*/
 }
