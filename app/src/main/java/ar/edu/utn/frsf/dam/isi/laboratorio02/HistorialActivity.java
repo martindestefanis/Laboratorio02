@@ -7,9 +7,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.MyDatabase;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoDAO;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoConDetalles;
 
 public class HistorialActivity extends AppCompatActivity{
 
@@ -17,6 +22,8 @@ public class HistorialActivity extends AppCompatActivity{
     private ListView lstHistorialPedidos;
     PedidoAdapter pedidoAdapter;
     PedidoDAO pedidoDAO;
+    List<PedidoConDetalles> pedidosConDetalles;
+    List<Pedido> pedidos = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +38,16 @@ public class HistorialActivity extends AppCompatActivity{
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                pedidoAdapter = new PedidoAdapter(HistorialActivity.this, pedidoDAO.getAll());
+                pedidosConDetalles = pedidoDAO.buscarPedidosConDetalles();
+                for(PedidoConDetalles pedConDet : pedidosConDetalles){
+                    Pedido p = pedConDet.pedido;
+                    p.setDetalle(pedConDet.detalle);
+                    pedidos.add(p);
+                }
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        pedidoAdapter = new PedidoAdapter(HistorialActivity.this, pedidos);
                         lstHistorialPedidos.setAdapter(pedidoAdapter);
                     }
                 });

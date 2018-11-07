@@ -9,10 +9,14 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.widget.Toast;
 
+import java.util.List;
+
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.MyDatabase;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoDAO;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoConDetalles;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoDetalle;
 
 
 public class EstadoPedidoReceiver extends BroadcastReceiver {
@@ -21,6 +25,7 @@ public class EstadoPedidoReceiver extends BroadcastReceiver {
     public static final String ESTADO_LISTO="ar.edu.utn.frsf.dam.isi.laboratorio02.ESTADO_LISTO";
 
     private PedidoDAO pedidoDAO;
+    private List<PedidoDetalle> pedidoDetalles;
 
     @Override
     public void onReceive(final Context context, final Intent intent) {
@@ -30,7 +35,10 @@ public class EstadoPedidoReceiver extends BroadcastReceiver {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                Pedido pedido = pedidoDAO.buscarPorID(intent.getExtras().getInt("idPedido"));
+                PedidoConDetalles pedidoConDetalles = pedidoDAO.buscarPorIDConDetalle(intent.getExtras().getInt("idPedido"));
+                Pedido pedido = pedidoConDetalles.pedido;
+                pedidoDetalles = pedidoConDetalles.detalle;
+                pedido.setDetalle(pedidoDetalles);
                 if(intent.getAction().equals(ESTADO_ACEPTADO)){
                     //Toast.makeText(context,"Pedido para " + pedido.getMailContacto() + " ha cambiado de estado a " + pedido.getEstado() ,Toast.LENGTH_LONG).show();
                     Intent destino= new Intent(context,PedidoActivity.class);
