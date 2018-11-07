@@ -9,10 +9,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.MyDatabase;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button btnNuevoPedido, btnHistorial, btnListaProductos, btnPrepararPedidos, btnConfiguracion, btnCategorias,
-    btnProdChange;
+    btnProdChange, btnBorrarTodo;
 
     private void createNotificationChannel() {
         // Crear el canal de notificaciones pero solo para API 26 io superior
@@ -64,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btnPrepararPedidos= (Button)findViewById(R.id.btnPrepararPedidos);
-
         btnPrepararPedidos.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -99,6 +100,20 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent= new Intent(getApplicationContext(),GestionProductoActivity.class);
                 startActivity(intent);
+            }
+        });
+        btnBorrarTodo = (Button) findViewById(R.id.btnBorrarTodo);
+        btnBorrarTodo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Runnable r = new Runnable() {
+                    @Override
+                    public void run() {
+                        MyDatabase.getInstance(getApplicationContext()).borrarTodo();
+                    }
+                };
+                Thread t = new Thread(r);
+                t.start();
             }
         });
     }

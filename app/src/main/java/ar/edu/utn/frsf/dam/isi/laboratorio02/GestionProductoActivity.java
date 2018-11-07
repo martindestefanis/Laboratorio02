@@ -16,8 +16,12 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.CategoriaDAO;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.MyDatabase;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoDAO;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRetrofit;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
@@ -39,6 +43,8 @@ public class GestionProductoActivity extends AppCompatActivity {
     private Button btnBorrar;
     private Boolean flagActualizacion;
     private ArrayAdapter<Categoria> comboAdapter;
+    private CategoriaDAO categoriaDAO;
+    private ProductoDAO productoDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +62,9 @@ public class GestionProductoActivity extends AppCompatActivity {
         btnBuscar = (Button)findViewById(R.id.btnAbmProductoBuscar);
         btnBorrar= (Button)findViewById(R.id.btnAbmProductoBorrar);
 
+        categoriaDAO = MyDatabase.getInstance(this).getCategoriaDAO();
+        productoDAO = MyDatabase.getInstance(this).getProductoDAO();
+
         btnBuscar.setEnabled(false);
         btnBorrar.setEnabled(false);
         idProductoBuscar.setEnabled(false);
@@ -63,8 +72,11 @@ public class GestionProductoActivity extends AppCompatActivity {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                CategoriaRest catRest = new CategoriaRest();
-                final Categoria[] cats = catRest.listarTodas().toArray(new Categoria[0]);
+                /*CategoriaRest catRest = new CategoriaRest();
+                final Categoria[] cats = catRest.listarTodas().toArray(new Categoria[0]);*/
+
+                final List<Categoria> cats = categoriaDAO.getAll();
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -102,8 +114,7 @@ public class GestionProductoActivity extends AppCompatActivity {
                 if(idProductoBuscar.getText().toString().isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Debe ingresar un ID", Toast.LENGTH_LONG);
                 }
-                int id = Integer.parseInt(idProductoBuscar.getText().toString());
-                ProductoRetrofit clienteRest =
+                /*ProductoRetrofit clienteRest =
                         RestClient.getInstance()
                                 .getRetrofit()
                                 .create(ProductoRetrofit.class);
@@ -129,14 +140,32 @@ public class GestionProductoActivity extends AppCompatActivity {
                     public void onFailure(Call<Producto> call, Throwable t) {
                         Toast.makeText(GestionProductoActivity.this, "Error al actualizar producto. Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                });
+                });*/
+
+                Runnable r = new Runnable() {
+                    @Override
+                    public void run() {
+                        final Producto p = productoDAO.buscarPorID(Integer.parseInt(idProductoBuscar.getText().toString()));
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                nombreProducto.setText(p.getNombre());
+                                descProducto.setText(p.getDescripcion());
+                                precioProducto.setText(Double.toString(p.getPrecio()));
+                                comboCategorias.setSelection(p.getCategoria().getId()-1);
+                            }
+                        });
+                    }
+                };
+                Thread t = new Thread(r);
+                t.start();
             }
         });
 
         btnBorrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int id = Integer.parseInt(idProductoBuscar.getText().toString());
+                /*int id = Integer.parseInt(idProductoBuscar.getText().toString());
                 ProductoRetrofit clienteRest =
                         RestClient.getInstance()
                                 .getRetrofit()
@@ -167,7 +196,37 @@ public class GestionProductoActivity extends AppCompatActivity {
                     public void onFailure(Call<Producto> call, Throwable t) {
                         Toast.makeText(GestionProductoActivity.this, "Error al actualizar producto. Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                });
+                });*/
+
+                Runnable r = new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+                            final Producto p = productoDAO.buscarPorID(Integer.parseInt(idProductoBuscar.getText().toString()));
+                            productoDAO.delete(p);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    nombreProducto.setText("");
+                                    descProducto.setText("");
+                                    precioProducto.setText("");
+                                    comboCategorias.setSelection(-1);
+                                    Toast.makeText(GestionProductoActivity.this, "Producto borrado correctamente", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                        catch (Exception e){
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(GestionProductoActivity.this, "Ocurrió un error", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }
+                };
+                Thread t = new Thread(r);
+                t.start();
             }
         });
 
@@ -182,68 +241,111 @@ public class GestionProductoActivity extends AppCompatActivity {
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    if(flagActualizacion) {
-                    int id = Integer.parseInt(idProductoBuscar.getText().toString());
-                    Double precio = Double.parseDouble(precioProducto.getText().toString());
-                    Producto p = new Producto(nombreProducto.getText().toString(), descProducto.getText().toString(), precio, (Categoria) comboCategorias.getSelectedItem());
-                    ProductoRetrofit clienteRest =
-                            RestClient.getInstance()
-                                    .getRetrofit()
-                                    .create(ProductoRetrofit.class);
-                    Call<Producto> altaCall= clienteRest.actualizarProducto(id, p);
-                    altaCall.enqueue(new Callback<Producto>() {
-                        @Override
-                        public void onResponse(Call<Producto> call, Response<Producto> resp) {
-                            // procesar la respuesta
-                            switch (resp.code()) {
-                                case 200:
-                                    Toast.makeText(GestionProductoActivity.this, "Producto actualizado correctamente", Toast.LENGTH_SHORT).show();
-                                    break;
-                                case 201:
-                                    Toast.makeText(GestionProductoActivity.this, "Producto actualizado correctamente", Toast.LENGTH_SHORT).show();
-                                    break;
-                                default:
-                                    Toast.makeText(GestionProductoActivity.this, "Error al actualizar producto. Código de error: " + resp.code(), Toast.LENGTH_SHORT).show();
-                                    break;
+                Runnable r = new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+                            if(flagActualizacion) {
+                                /*int id = Integer.parseInt(idProductoBuscar.getText().toString());
+                                Double precio = Double.parseDouble(precioProducto.getText().toString());
+                                Producto p = new Producto(nombreProducto.getText().toString(), descProducto.getText().toString(), precio, (Categoria) comboCategorias.getSelectedItem());
+                                ProductoRetrofit clienteRest =
+                                        RestClient.getInstance()
+                                                .getRetrofit()
+                                                .create(ProductoRetrofit.class);
+                                Call<Producto> altaCall= clienteRest.actualizarProducto(id, p);
+                                altaCall.enqueue(new Callback<Producto>() {
+                                    @Override
+                                    public void onResponse(Call<Producto> call, Response<Producto> resp) {
+                                        // procesar la respuesta
+                                        switch (resp.code()) {
+                                            case 200:
+                                                Toast.makeText(GestionProductoActivity.this, "eProducto actualizado correctament", Toast.LENGTH_SHORT).show();
+                                                break;
+                                            case 201:
+                                                Toast.makeText(GestionProductoActivity.this, "Producto actualizado correctamente", Toast.LENGTH_SHORT).show();
+                                                break;
+                                            default:
+                                                Toast.makeText(GestionProductoActivity.this, "Error al actualizar producto. Código de error: " + resp.code(), Toast.LENGTH_SHORT).show();
+                                                break;
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Producto> call, Throwable t) {
+                                        Toast.makeText(GestionProductoActivity.this, "Error al actualizar producto. Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });*/
+
+                                Producto p = productoDAO.buscarPorID(Integer.parseInt(idProductoBuscar.getText().toString()));
+                                p.setCategoria((Categoria) comboCategorias.getSelectedItem());
+                                p.setDescripcion(descProducto.getText().toString());
+                                p.setNombre(nombreProducto.getText().toString());
+                                p.setPrecio(Double.parseDouble(precioProducto.getText().toString()));
+                                productoDAO.update(p);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(GestionProductoActivity.this, "Producto actualizado correctament", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                            else {
+                                /*Double precio = Double.parseDouble(precioProducto.getText().toString());
+                                Producto p = new Producto(nombreProducto.getText().toString(), descProducto.getText().toString(), precio, (Categoria) comboCategorias.getSelectedItem());
+                                ProductoRetrofit clienteRest =
+                                        RestClient.getInstance()
+                                                .getRetrofit()
+                                                .create(ProductoRetrofit.class);
+                                Call<Producto> altaCall = clienteRest.crearProducto(p);
+                                altaCall.enqueue(new Callback<Producto>() {
+                                    @Override
+                                    public void onResponse(Call<Producto> call, Response<Producto> resp) {
+                                        // procesar la respuesta
+                                        switch (resp.code()) {
+                                            case 200:
+                                                Toast.makeText(GestionProductoActivity.this, "Producto creado correctamente", Toast.LENGTH_SHORT).show();
+                                                break;
+                                            case 201:
+                                                Toast.makeText(GestionProductoActivity.this, "Producto creado correctamente", Toast.LENGTH_SHORT).show();
+                                                break;
+                                            default:
+                                                Toast.makeText(GestionProductoActivity.this, "Error al crear producto. Código de error: " + resp.code(), Toast.LENGTH_SHORT).show();
+                                                break;
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Producto> call, Throwable t) {
+                                    }
+                                });*/
+
+                                Producto p = new Producto(nombreProducto.getText().toString(), descProducto.getText().toString(), Double.parseDouble(precioProducto.getText().toString()), (Categoria) comboCategorias.getSelectedItem());
+                                productoDAO.insert(p);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        nombreProducto.setText("");
+                                        descProducto.setText("");
+                                        precioProducto.setText("");
+                                        comboCategorias.setSelection(-1);
+                                        Toast.makeText(GestionProductoActivity.this, "Producto creado correctamente", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
                         }
-
-                        @Override
-                        public void onFailure(Call<Producto> call, Throwable t) {
-                            Toast.makeText(GestionProductoActivity.this, "Error al actualizar producto. Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        catch (Exception e){
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(GestionProductoActivity.this, "Ocurrió un error", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
-                    });
-                }
-                else {
-                    Double precio = Double.parseDouble(precioProducto.getText().toString());
-                    Producto p = new Producto(nombreProducto.getText().toString(), descProducto.getText().toString(), precio, (Categoria) comboCategorias.getSelectedItem());
-                    ProductoRetrofit clienteRest =
-                            RestClient.getInstance()
-                                    .getRetrofit()
-                                    .create(ProductoRetrofit.class);
-                    Call<Producto> altaCall = clienteRest.crearProducto(p);
-                    altaCall.enqueue(new Callback<Producto>() {
-                        @Override
-                        public void onResponse(Call<Producto> call, Response<Producto> resp) {
-                            // procesar la respuesta
-                            switch (resp.code()) {
-                                case 200:
-                                    Toast.makeText(GestionProductoActivity.this, "Producto creado correctamente", Toast.LENGTH_SHORT).show();
-                                    break;
-                                case 201:
-                                    Toast.makeText(GestionProductoActivity.this, "Producto creado correctamente", Toast.LENGTH_SHORT).show();
-                                    break;
-                                default:
-                                    Toast.makeText(GestionProductoActivity.this, "Error al crear producto. Código de error: " + resp.code(), Toast.LENGTH_SHORT).show();
-                                    break;
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<Producto> call, Throwable t) {
-                        }
-                    });
-                }
+                    }
+                };
+                Thread t = new Thread(r);
+                t.start();
             }
         });
     }

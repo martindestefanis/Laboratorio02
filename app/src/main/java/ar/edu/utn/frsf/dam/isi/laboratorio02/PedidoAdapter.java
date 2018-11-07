@@ -12,12 +12,17 @@ import android.widget.ArrayAdapter;
 import android.view.View;
 import java.util.List;
 
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.MyDatabase;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoDAO;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoDetalleDAO;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoDetalle;
 
 public class PedidoAdapter extends ArrayAdapter<Pedido> {
     private Context ctx;
     private List<Pedido> datos;
     private PedidoHolder pedidoHolder;
+    private PedidoDAO pedidoDAO;
 
     public PedidoAdapter(Context context,List<Pedido> objects) {
         super(context, 0, objects);
@@ -28,6 +33,7 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        pedidoDAO = MyDatabase.getInstance(this.ctx).getPedidoDAO();
         LayoutInflater inflater = LayoutInflater.from(this.ctx);
         View fila_historial = convertView;
         if (fila_historial == null) {
@@ -56,11 +62,19 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
                     @Override
                     public void onClick(View view) {
                         int indice = (int) view.getTag();
-                        Pedido pedidoSeleccionado = datos.get(indice);
+                        final Pedido pedidoSeleccionado = datos.get(indice);
                         if( pedidoSeleccionado.getEstado().equals(Pedido.Estado.REALIZADO) ||
                                 pedidoSeleccionado.getEstado().equals(Pedido.Estado.ACEPTADO) ||
                                 pedidoSeleccionado.getEstado().equals(Pedido.Estado.EN_PREPARACION)) {
                             pedidoSeleccionado.setEstado(Pedido.Estado.CANCELADO);
+                            Runnable r = new Runnable() {
+                                @Override
+                                public void run() {
+                                    pedidoDAO.update(pedidoSeleccionado);
+                                }
+                            };
+                            Thread t = new Thread(r);
+                            t.start();
                             PedidoAdapter.this.notifyDataSetChanged();
                             return;
                         }
@@ -100,7 +114,7 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
             public void onClick(View v) {
                 Intent i = new Intent(ctx, PedidoActivity.class);
                 i.putExtra("idPedidoSeleccionado", pedido.getId());
-                Log.d("Database", "idPedidoSeleccionado salida " + pedido.getId().toString());
+                Log.d("EjemploDatabase", "idPedidoSeleccionado salida " + pedido.getId().toString());
                 ctx.startActivity(i);
             }
         });

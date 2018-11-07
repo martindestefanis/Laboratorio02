@@ -19,9 +19,21 @@
         android:id="@+id/btnCrearCategoria"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btnVerCategorias"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="VER CATEGORIAS" />
+
     <Button
         android:text="@string/btnCategoriaVolver"
         android:id="@+id/btnCategoriaVolver"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tvResultado"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>
