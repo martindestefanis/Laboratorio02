@@ -20,6 +20,7 @@ import java.util.List;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
 
 public class CategoriaRest {
+    /*
     // realiza el POST de una categoría al servidor REST
     public void crearCategoria(Categoria c) {
         //Variables de conexión y stream de escritura y lectura
@@ -144,5 +145,5 @@ public class CategoriaRest {
         }
         //retornar resultado
         return resultado;
-    }
+    }*/
 }

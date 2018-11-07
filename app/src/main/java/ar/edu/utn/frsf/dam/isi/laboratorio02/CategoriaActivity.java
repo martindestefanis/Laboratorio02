@@ -134,7 +134,7 @@ public class CategoriaActivity extends AppCompatActivity {
 
     private String consultaCategorias(){
         List<Categoria> lista = categoriaDAO.getAll();
-        final StringBuilder resultado = new StringBuilder(" === DEPARTAMENTOS ==="+ "\r\n");
+        final StringBuilder resultado = new StringBuilder(" === CATEGORIAS ==="+ "\r\n");
         for (Categoria d : lista) {
             resultado.append(d.getId() + ": " + d.getNombre() + "\r\n");
         }
